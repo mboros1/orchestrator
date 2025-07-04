@@ -24,11 +24,25 @@
 
 ---
 
-## Instance 2: [Unassigned]
+## Instance 2: Forge Whisperer
 
-**Status**: ⚪ Available  
-**Branch**: TBD  
-**Assignment**: Awaiting task assignment  
+**Status**: 🟢 Active  
+**Persona**: Forge Whisperer - Interpreter of System Songs  
+**Branch**: `feature/stl-simplifier-debugging`  
+**Started**: July 4, 2025  
+**Assignment**: Investigate SimplifyModifier freeze with 5M triangle STL files
+
+### Current Progress
+- 🔨 Creating specialized CLAUDE.md identity
+- 🔍 Analyzing SimplifyModifier freeze at line 135
+- 📊 5,101,298 triangles → 255,065 target (5% reduction)
+- ⏸️ Process freezes at `modifier.modify()` call
+
+### Investigation Focus
+- Memory usage patterns during simplification
+- Algorithm complexity with large datasets
+- Browser/renderer thread limitations
+- Three.js SimplifyModifier implementation  
 
 ---
 

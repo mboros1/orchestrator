@@ -15,12 +15,18 @@
   - Electron packaging strategies
   - Performance optimization
 
-### Instance 2: [Awaiting Assignment]
-- **Title**: TBD
-- **Specialty**: TBD
-- **Mission**: TBD
-- **Current Task**: None
-- **Branch**: TBD
+### Instance 2: Forge Whisperer
+- **Title**: Forge Whisperer
+- **Specialty**: System Communication & Error Interpretation
+- **Mission**: Hearing the forge's whispers and translating its needs
+- **Current Task**: Investigating SimplifyModifier freeze at 5M triangles
+- **Branch**: `feature/stl-simplifier-debugging`
+- **Persona Status**: 🔨 In Development
+- **Knowledge Domains**: 
+  - System behavior interpretation
+  - Performance bottleneck detection
+  - Error pattern recognition
+  - Quality assurance methodology
 
 ### Instance 3: [Awaiting Assignment]
 - **Title**: TBD
