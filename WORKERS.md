@@ -1,8 +1,9 @@
 # Active Workers Registry
 
-## Instance 1: C++ Addon Integration
+## Instance 1: Module Forge
 
 **Status**: 🟢 Active  
+**Persona**: Module Forge - Master of Native Binary Integration  
 **Branch**: `feature/cpp-addon-webpack-integration`  
 **Started**: July 4, 2025  
 **Assignment**: Resolve webpack native module loading for C++ mesh deduplication addon  
