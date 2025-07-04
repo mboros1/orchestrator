@@ -7,7 +7,7 @@
 check_instance_signals() {
     local instance_dir=$1
     local instance_name=$(basename "$instance_dir")
-    local signals_dir="$instance_dir/signals"
+    local signals_dir="$instance_dir/electric-dreams-forge/signals"
     
     echo "📍 Checking $instance_name..."
     

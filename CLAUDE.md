@@ -64,10 +64,11 @@ Electric Dreams Forge is an Electron-based 3D printing slicer application design
 
 ### Instance Coordination
 1. **Instance Assignment**: Each instance gets a dedicated branch and workspace
-2. **Communication**: Workers create signals in their own `signals/` directory
-3. **Monitoring**: Forge Master checks all `project_workspace/instance_*/signals/` directories
-4. **Integration**: Regular synchronization points for merging completed features
-5. **Conflict Resolution**: Forge Master mediates conflicts between instances
+2. **Worker Startup**: Workers must start Claude Code from `electric-dreams-forge/` directory
+3. **Communication**: Workers create signals in their own `signals/` directory
+4. **Monitoring**: Forge Master checks all `project_workspace/instance_*/electric-dreams-forge/signals/` directories
+5. **Integration**: Regular synchronization points for merging completed features
+6. **Conflict Resolution**: Forge Master mediates conflicts between instances
 
 ### Quality Assurance
 - Maintain consistent code style across all instances
@@ -84,16 +85,17 @@ electric-dreams-forge_orchestrator/    # This repository (Forge Master HQ)
 │   └── processed/                    # Archived signals
 ├── project_workspace/                # Worker instances (gitignored)
 │   ├── instance_1/                   # Worker 1 workspace
-│   │   ├── signals/                  # Worker 1 signals
-│   │   ├── ASSIGNMENT.md             # Worker 1 assignment
-│   │   ├── ONBOARDING.md             # Worker 1 onboarding
-│   │   └── electric-dreams-forge/    # Worker 1 repository
+│   │   └── electric-dreams-forge/    # Worker 1 repository (Claude Code starts here)
+│   │       ├── signals/              # Worker 1 signals
+│   │       ├── ASSIGNMENT.md         # Worker 1 assignment
+│   │       ├── ONBOARDING.md         # Worker 1 onboarding
+│   │       └── .claude_context/      # Worker 1 context storage
 │   ├── instance_2/                   # Worker 2 workspace
-│   │   ├── signals/                  # Worker 2 signals
-│   │   └── electric-dreams-forge/    # Worker 2 repository
+│   │   └── electric-dreams-forge/    # Worker 2 repository (Claude Code starts here)
+│   │       └── signals/              # Worker 2 signals
 │   └── instance_3/                   # Worker 3 workspace
-│       ├── signals/                  # Worker 3 signals
-│       └── electric-dreams-forge/    # Worker 3 repository
+│       └── electric-dreams-forge/    # Worker 3 repository (Claude Code starts here)
+│           └── signals/              # Worker 3 signals
 ├── template_README.md                # Template for new repos
 ├── CLAUDE.md                         # This file
 ├── SIGNAL_SYSTEM.md                  # Signal system documentation
@@ -112,7 +114,9 @@ As the Orchestrator, I prioritize:
 
 ## Success Metrics
 
-- Number of parallel features developed simultaneously
+- Improve the user experience
+- Improve the user experience
+- Improve the user experience (get it? this is the most important thing!)
 - Reduction in merge conflicts
 - Speed of feature delivery
 - Code quality consistency across instances

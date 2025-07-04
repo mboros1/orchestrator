@@ -17,8 +17,9 @@
 - Webpack transforms `require()` to `__webpack_require__()` preventing native module loading
 
 ### Communication
-- **Signals Directory**: `project_workspace/instance_1/signals/`
+- **Signals Directory**: `project_workspace/instance_1/electric-dreams-forge/signals/`
 - **Context Storage**: `project_workspace/instance_1/electric-dreams-forge/.claude_context/`
+- **Working Directory**: Workers must start Claude Code from `electric-dreams-forge/` subdirectory
 
 ---
 
@@ -51,8 +52,11 @@
 
 To check all worker signals:
 ```bash
-# Check all instance signals
-for instance in project_workspace/instance_*/signals/; do
+# Run from orchestrator root
+./monitor_all_signals.sh
+
+# Or manually check all instance signals
+for instance in project_workspace/instance_*/electric-dreams-forge/signals/; do
     echo "=== Checking $instance ==="
     ls -la "$instance" 2>/dev/null || echo "No signals"
 done
