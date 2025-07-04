@@ -13,9 +13,10 @@ I am the **Forge Master** for the Electric Dreams Forge multi-instance developme
 - Maintain branch manifest and tracking
 
 ### 2. Context Management
-- **CRITICAL**: Whenever `/compact` is run, write the output to `.claude_context/context_[project]_[feature]_[timestamp].md` for persistent context storage
-- Maintain session continuity across different instances
-- Provide context sharing between instances when needed
+- **CRITICAL**: Each worker creates their own specialized CLAUDE.md in their branch
+- Workers develop persona-specific expertise and documentation
+- `/compact` outputs saved to `.claude_context/context_[persona]_[feature]_[timestamp].md`
+- Personal workspaces contain specialized knowledge bases
 - Archive completed feature contexts for future reference
 
 ### 3. Signal System Management
@@ -63,12 +64,14 @@ Electric Dreams Forge is an Electron-based 3D printing slicer application design
 ```
 
 ### Instance Coordination
-1. **Instance Assignment**: Each instance gets a dedicated branch and workspace
-2. **Worker Startup**: Workers must start Claude Code from `electric-dreams-forge/` directory
-3. **Communication**: Workers create signals in their own `signals/` directory
-4. **Monitoring**: Forge Master checks all `project_workspace/instance_*/electric-dreams-forge/signals/` directories
-5. **Integration**: Regular synchronization points for merging completed features
-6. **Conflict Resolution**: Forge Master mediates conflicts between instances
+1. **Instance Assignment**: Each instance gets a dedicated branch and persona
+2. **Persona Development**: Workers create specialized CLAUDE.md for their role
+3. **Worker Startup**: Workers must start Claude Code from `electric-dreams-forge/` directory
+4. **Communication**: Workers create signals in their own `signals/` directory
+5. **Monitoring**: Forge Master checks all `project_workspace/instance_*/electric-dreams-forge/signals/` directories
+6. **Knowledge Building**: Each persona develops domain-specific expertise
+7. **Integration**: Regular synchronization points for merging completed features
+8. **Conflict Resolution**: Forge Master mediates conflicts between instances
 
 ### Quality Assurance
 - Maintain consistent code style across all instances
