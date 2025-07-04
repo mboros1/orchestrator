@@ -18,13 +18,19 @@ I am the **Forge Master** for the Electric Dreams Forge multi-instance developme
 - Provide context sharing between instances when needed
 - Archive completed feature contexts for future reference
 
-### 3. Project Coordination
+### 3. Signal System Management
+- **Monitor Multiple Directories**: Check `project_workspace/instance_*/signals/` for worker communications
+- **Process Signals**: Read and respond to worker signals from their individual signal directories
+- **Archive Processed**: Move processed signals to `processed/` within each instance's signal directory
+- **No Cross-Instance Access**: Workers operate independently in their own directories
+
+### 4. Project Coordination
 - Assign specific features/tasks to individual Claude Code instances
 - Monitor progress across all active instances
 - Resolve conflicts and dependencies between parallel development streams
 - Ensure code quality and consistency across instances
 
-### 4. Repository Management
+### 5. Repository Management
 - Initialize new feature repositories as needed
 - Maintain consistent project structure across all instances
 - Manage git workflows and remote repository synchronization
@@ -58,9 +64,10 @@ Electric Dreams Forge is an Electron-based 3D printing slicer application design
 
 ### Instance Coordination
 1. **Instance Assignment**: Each instance gets a dedicated branch and workspace
-2. **Communication**: Use context files and branch comments for coordination
-3. **Integration**: Regular synchronization points for merging completed features
-4. **Conflict Resolution**: Orchestrator mediates conflicts between instances
+2. **Communication**: Workers create signals in their own `signals/` directory
+3. **Monitoring**: Forge Master checks all `project_workspace/instance_*/signals/` directories
+4. **Integration**: Regular synchronization points for merging completed features
+5. **Conflict Resolution**: Forge Master mediates conflicts between instances
 
 ### Quality Assurance
 - Maintain consistent code style across all instances
@@ -71,14 +78,27 @@ Electric Dreams Forge is an Electron-based 3D printing slicer application design
 ## Directory Structure
 
 ```
-project_workspace/
-├── project_orchestrator/           # This repository
-│   ├── .claude_context/           # Context storage
-│   ├── template_README.md         # Template for new repos
-│   └── CLAUDE.md                  # This file
-├── instance_1/electric-dreams-forge/
-├── instance_2/electric-dreams-forge/
-└── instance_3/electric-dreams-forge/
+electric-dreams-forge_orchestrator/    # This repository (Forge Master HQ)
+├── .claude_context/                  # Context storage
+├── signals/                          # Forge Master's own signals
+│   └── processed/                    # Archived signals
+├── project_workspace/                # Worker instances (gitignored)
+│   ├── instance_1/                   # Worker 1 workspace
+│   │   ├── signals/                  # Worker 1 signals
+│   │   ├── ASSIGNMENT.md             # Worker 1 assignment
+│   │   ├── ONBOARDING.md             # Worker 1 onboarding
+│   │   └── electric-dreams-forge/    # Worker 1 repository
+│   ├── instance_2/                   # Worker 2 workspace
+│   │   ├── signals/                  # Worker 2 signals
+│   │   └── electric-dreams-forge/    # Worker 2 repository
+│   └── instance_3/                   # Worker 3 workspace
+│       ├── signals/                  # Worker 3 signals
+│       └── electric-dreams-forge/    # Worker 3 repository
+├── template_README.md                # Template for new repos
+├── CLAUDE.md                         # This file
+├── SIGNAL_SYSTEM.md                  # Signal system documentation
+├── monitor_signals.sh                # Signal monitoring script
+└── create_signal.sh                  # Signal creation helper
 ```
 
 ## Development Philosophy
