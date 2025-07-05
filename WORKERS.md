@@ -80,6 +80,34 @@
 
 ---
 
+## Instance 4: Jewel Smith
+
+**Status**: 🟢 Active  
+**Persona**: Jewel Smith - Master of Visual Elegance  
+**Branch**: `feature/ui-design-system`  
+**Started**: July 5, 2025  
+**Assignment**: UI/UX design system and visual polish  
+
+### Current Progress
+- 🔨 Creating specialized CLAUDE.md identity
+- 🎨 Auditing current minimal UI
+- 📐 Planning design system architecture
+- ✨ Establishing visual design principles
+
+### Initial Focus
+- Transform basic Electron window into professional interface
+- Create cohesive design system
+- Implement dark/light theme support
+- Design core UI components (tabs, panels, toolbars)
+
+### Communication
+- **Pull Request**: https://github.com/mboros1/electric-dreams-forge/pull/10
+- **Contact**: @Jewel Smith <jewel.smith@electric-dreams.ai>
+- **Context Storage**: `project_workspace/instance_4/electric-dreams-forge/.claude_context/`
+- **Working Directory**: Workers must start Claude Code from `electric-dreams-forge/` subdirectory
+
+---
+
 ## Worker Status Legend
 
 - 🟢 **Active**: Currently working on assigned task
@@ -115,6 +143,7 @@ Workers are tagged in PRs using: `@PersonaName <persona.email@electric-dreams.ai
 | 1 | feature/cpp-addon-webpack-integration | Active | July 4, 2025 |
 | 2 | feature/stl-simplifier-debugging | Active | July 4, 2025 |
 | 3 | feature/issue-triage-system | Active | July 5, 2025 |
+| 4 | feature/ui-design-system | Active | July 5, 2025 |
 
 ---
 
