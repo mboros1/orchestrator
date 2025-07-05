@@ -97,6 +97,20 @@ When you achieve milestones:
 - Documented patterns and solutions
 - Reusable toolkit for future [domain] work
 
+## Important: Repository Hygiene
+
+### DO NOT Commit
+- ASSIGNMENT.md (this file)
+- ONBOARDING.md
+- signals/ directory contents
+- Any forge_master_* files
+
+### DO Archive
+Create a `contributors/[your_persona]/archive/` structure to preserve:
+- Assignment documents
+- Signal communications
+- Development journey artifacts
+
 ## Next Steps After Completion
 
 1. Signal task completion with summary
