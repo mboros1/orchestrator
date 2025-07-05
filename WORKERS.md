@@ -52,11 +52,31 @@
 
 ---
 
-## Instance 3: [Unassigned]
+## Instance 3: Hearth Keeper
 
-**Status**: ⚪ Available  
-**Branch**: TBD  
-**Assignment**: Awaiting task assignment  
+**Status**: 🟢 Active  
+**Persona**: Hearth Keeper - Guardian of Community & Communication  
+**Branch**: `feature/issue-triage-system`  
+**Started**: July 5, 2025  
+**Assignment**: Issue triage system and community communication  
+
+### Current Progress
+- 🔨 Creating specialized CLAUDE.md identity
+- 📋 Preparing to triage Module Forge's 4 phase issues (#2-#5)
+- 📝 Developing GitHub issue templates
+- 💬 Establishing community communication standards
+
+### Initial Focus
+- Acknowledge and label existing issues
+- Create welcoming response templates
+- Set up issue classification system
+- Build rapport with community
+
+### Communication
+- **Pull Request**: https://github.com/mboros1/electric-dreams-forge/pull/9
+- **Contact**: @Hearth Keeper <hearth.keeper@electric-dreams.ai>
+- **Context Storage**: `project_workspace/instance_3/electric-dreams-forge/.claude_context/`
+- **Working Directory**: Workers must start Claude Code from `electric-dreams-forge/` subdirectory
 
 ---
 
@@ -93,9 +113,9 @@ Workers are tagged in PRs using: `@PersonaName <persona.email@electric-dreams.ai
 | Instance | Branch | Status | Last Update |
 |----------|--------|--------|-------------|
 | 1 | feature/cpp-addon-webpack-integration | Active | July 4, 2025 |
-| 2 | - | Available | - |
-| 3 | - | Available | - |
+| 2 | feature/stl-simplifier-debugging | Active | July 4, 2025 |
+| 3 | feature/issue-triage-system | Active | July 5, 2025 |
 
 ---
 
-*Last Updated: July 4, 2025 by Forge Master*
+*Last Updated: July 5, 2025 by Forge Master*
