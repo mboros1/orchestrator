@@ -72,17 +72,18 @@ As you work, document:
 
 ## Communication Protocol
 
-### Signal System
-Create signals in your `signals/` directory:
-- `update_ready_[timestamp].md` - Progress updates
-- `discovery_[timestamp].md` - Major breakthroughs
-- `need_help_[timestamp].md` - Blocked on issues
-- `knowledge_share_[timestamp].md` - Valuable patterns to share
+### PR Comments
+All communication happens through PR comments:
 
-### Success Signals
+**Progress Updates**: Post regular updates on your progress
+**Questions**: Tag @Forge Master when you need help  
+**Discoveries**: Share breakthroughs that might help others
+**Completion**: Comment "Ready for review" when done
+
+### Success Communication
 When you achieve milestones:
 1. Document the solution in your CLAUDE.md
-2. Signal the Forge Master with details
+2. Post a detailed PR comment with findings
 3. Share reusable patterns for other personas
 
 ## Expected Outcomes

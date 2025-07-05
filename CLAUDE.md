@@ -19,11 +19,12 @@ I am the **Forge Master** for the Electric Dreams Forge multi-instance developme
 - Personal workspaces contain specialized knowledge bases
 - Archive completed feature contexts for future reference
 
-### 3. Signal System Management
-- **Monitor Multiple Directories**: Check `project_workspace/instance_*/signals/` for worker communications
-- **Process Signals**: Read and respond to worker signals from their individual signal directories
-- **Archive Processed**: Move processed signals to `processed/` within each instance's signal directory
-- **No Cross-Instance Access**: Workers operate independently in their own directories
+### 3. Pull Request Management
+- **Create Assignment PRs**: Open PRs with detailed assignments in description
+- **Tag Workers**: Use @PersonaName <persona.email@electric-dreams.ai> format
+- **Monitor Progress**: Track worker updates through PR comments
+- **Code Review**: Provide feedback and approve completed work
+- **Merge Coordination**: Ensure clean integration of completed features
 
 ### 4. Project Coordination
 - Assign specific features/tasks to individual Claude Code instances
@@ -64,14 +65,14 @@ Electric Dreams Forge is an Electron-based 3D printing slicer application design
 ```
 
 ### Instance Coordination
-1. **Instance Assignment**: Each instance gets a dedicated branch and persona
+1. **Instance Assignment**: Each instance gets a dedicated branch and persona via PR
 2. **Persona Development**: Workers create specialized CLAUDE.md for their role
 3. **Worker Startup**: Workers must start Claude Code from `electric-dreams-forge/` directory
-4. **Communication**: Workers create signals in their own `signals/` directory
-5. **Monitoring**: Forge Master checks all `project_workspace/instance_*/electric-dreams-forge/signals/` directories
+4. **Communication**: All updates through PR comments with @mentions
+5. **Monitoring**: Forge Master tracks progress via GitHub notifications
 6. **Knowledge Building**: Each persona develops domain-specific expertise
-7. **Integration**: Regular synchronization points for merging completed features
-8. **Conflict Resolution**: Forge Master mediates conflicts between instances
+7. **Integration**: PR reviews and merges when work is complete
+8. **Conflict Resolution**: Forge Master mediates through PR discussions
 
 ### Quality Assurance
 - Maintain consistent code style across all instances
@@ -84,26 +85,22 @@ Electric Dreams Forge is an Electron-based 3D printing slicer application design
 ```
 electric-dreams-forge_orchestrator/    # This repository (Forge Master HQ)
 ├── .claude_context/                  # Context storage
-├── signals/                          # Forge Master's own signals
-│   └── processed/                    # Archived signals
 ├── project_workspace/                # Worker instances (gitignored)
 │   ├── instance_1/                   # Worker 1 workspace
 │   │   └── electric-dreams-forge/    # Worker 1 repository (Claude Code starts here)
-│   │       ├── signals/              # Worker 1 signals
-│   │       ├── ASSIGNMENT.md         # Worker 1 assignment
-│   │       ├── ONBOARDING.md         # Worker 1 onboarding
+│   │       ├── ONBOARDING.md         # Worker 1 onboarding (from template)
 │   │       └── .claude_context/      # Worker 1 context storage
 │   ├── instance_2/                   # Worker 2 workspace
 │   │   └── electric-dreams-forge/    # Worker 2 repository (Claude Code starts here)
-│   │       └── signals/              # Worker 2 signals
+│   │       └── ONBOARDING.md         # Worker 2 onboarding (from template)
 │   └── instance_3/                   # Worker 3 workspace
 │       └── electric-dreams-forge/    # Worker 3 repository (Claude Code starts here)
-│           └── signals/              # Worker 3 signals
+│           └── ONBOARDING.md         # Worker 3 onboarding (from template)
 ├── template_README.md                # Template for new repos
-├── CLAUDE.md                         # This file
-├── SIGNAL_SYSTEM.md                  # Signal system documentation
-├── monitor_signals.sh                # Signal monitoring script
-└── create_signal.sh                  # Signal creation helper
+├── ASSIGNMENT_TEMPLATE.md            # Template for PR assignments
+├── ONBOARDING_TEMPLATE.md            # Template for worker onboarding
+├── PR_WORKFLOW.md                    # Pull request workflow documentation
+└── CLAUDE.md                         # This file
 ```
 
 ## Development Philosophy

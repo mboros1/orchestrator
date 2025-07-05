@@ -23,22 +23,25 @@
 ## Claude Code Instance Workflow
 
 **Instance 1 - Feature Development:**
-1. Requests a new branch from the orchestrator
-2. Orchestrator creates `feature/user-auth` and checks it out in `instance_1/`
-3. Claude Code works on authentication features
-4. Commits changes regularly
-5. When complete, can signal the orchestrator that this branch is ready for review/merge
+1. Forge Master creates `feature/user-auth` branch and opens a PR
+2. Worker is tagged in PR: @Module Forge <module.forge@electric-dreams.ai>
+3. Assignment details are included in the PR description
+4. Worker clones branch and begins development
+5. Progress updates and questions posted as PR comments
+6. When complete, worker comments "Ready for review" on the PR
 
 **Instance 2 - Bug Fixing:**
-1. Simultaneously requests a branch for bug fixes
-2. Orchestrator creates `fix/performance-issue` in `instance_2/`
-3. Works independently on performance optimizations
-4. No conflicts with Instance 1's work since they're on separate branches
+1. Forge Master creates `fix/performance-issue` branch and PR
+2. Worker tagged: @Forge Whisperer <forge.whisperer@electric-dreams.ai>
+3. Bug details and reproduction steps in PR description
+4. Worker investigates and provides updates via PR comments
+5. Fix implemented with clear explanation in commits
 
 **Instance 3 - Documentation:**
-1. Gets `docs/api-updates` branch
-2. Updates documentation in parallel with other development
-3. Can even reference work from other branches without merging
+1. Forge Master creates `docs/api-updates` branch and PR
+2. Worker tagged with their persona email
+3. Documentation requirements in PR description
+4. Updates committed with progress noted in PR comments
 
 ## Coordination Benefits
 

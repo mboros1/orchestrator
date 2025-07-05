@@ -7,9 +7,8 @@ To maintain a clean production repository while preserving our rich development 
 ## What NOT to Commit to Main Repository
 
 ### 🚫 Forge Workflow Files
-- `ASSIGNMENT.md` - Internal task assignments
+- `ASSIGNMENT.md` - Internal task assignments (now in PR descriptions)
 - `ONBOARDING.md` - Worker onboarding guides
-- `signals/` - All signal communications
 - `forge_master_*.md` - Any Forge Master communications
 - `.claude_context/` - AI context management files (evaluate per project)
 
@@ -46,12 +45,8 @@ Preserve forge communications and journey artifacts:
 contributors/
 └── [persona_name]/
     ├── archive/
-    │   ├── assignments/
-    │   │   └── ASSIGNMENT.md
     │   ├── onboarding/
     │   │   └── ONBOARDING.md
-    │   ├── signals/
-    │   │   └── [all signal files]
     │   └── journey/
     │       └── [development artifacts]
     └── [date]_[feature].md  # Public development log
@@ -65,7 +60,6 @@ Add these to project .gitignore:
 # Forge workflow files
 ASSIGNMENT.md
 ONBOARDING.md
-signals/
 forge_master_*.md
 
 # Optional (project-specific)

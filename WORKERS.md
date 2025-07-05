@@ -18,7 +18,8 @@
 - Webpack transforms `require()` to `__webpack_require__()` preventing native module loading
 
 ### Communication
-- **Signals Directory**: `project_workspace/instance_1/electric-dreams-forge/signals/`
+- **Pull Request**: https://github.com/mboros1/electric-dreams-forge/pull/1
+- **Contact**: @Module Forge <module.forge@electric-dreams.ai>
 - **Context Storage**: `project_workspace/instance_1/electric-dreams-forge/.claude_context/`
 - **Working Directory**: Workers must start Claude Code from `electric-dreams-forge/` subdirectory
 
@@ -42,7 +43,12 @@
 - Memory usage patterns during simplification
 - Algorithm complexity with large datasets
 - Browser/renderer thread limitations
-- Three.js SimplifyModifier implementation  
+- Three.js SimplifyModifier implementation
+
+### Communication
+- **Pull Request**: [To be created]
+- **Contact**: @Forge Whisperer <forge.whisperer@electric-dreams.ai>
+- **Context Storage**: `project_workspace/instance_2/electric-dreams-forge/.claude_context/`
 
 ---
 
@@ -63,19 +69,24 @@
 - ⚪ **Available**: Ready for new assignment
 - 🔴 **Inactive**: Temporarily paused
 
-## Signal Monitoring
+## PR Communication
 
-To check all worker signals:
+All worker communication happens through GitHub Pull Requests:
+
+### Viewing Active Work
 ```bash
-# Run from orchestrator root
-./monitor_all_signals.sh
+# List all open PRs
+gh pr list
 
-# Or manually check all instance signals
-for instance in project_workspace/instance_*/electric-dreams-forge/signals/; do
-    echo "=== Checking $instance ==="
-    ls -la "$instance" 2>/dev/null || echo "No signals"
-done
+# View specific PR with comments
+gh pr view [PR-number]
+
+# Check PR status
+gh pr status
 ```
+
+### Worker Contact Format
+Workers are tagged in PRs using: `@PersonaName <persona.email@electric-dreams.ai>`
 
 ## Branch Overview
 
