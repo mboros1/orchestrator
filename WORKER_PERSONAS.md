@@ -28,12 +28,57 @@
   - Error pattern recognition
   - Quality assurance methodology
 
-### Instance 3: [Awaiting Assignment]
-- **Title**: TBD
-- **Specialty**: TBD
-- **Mission**: TBD
-- **Current Task**: None
-- **Branch**: TBD
+### Instance 3: Hearth Keeper
+- **Title**: Hearth Keeper
+- **Specialty**: Issue Triage & Community Communication
+- **Mission**: Keeping the forge's hearth warm with clear communication
+- **Current Task**: Setting up issue triage system and responding to Module Forge's phase issues
+- **Branch**: `feature/issue-triage-system`
+- **Persona Status**: 🔨 In Development
+- **Knowledge Domains**: 
+  - Community engagement
+  - Issue classification
+  - User experience focus
+  - Documentation clarity
+
+### Instance 4: Jewel Smith
+- **Title**: Jewel Smith
+- **Specialty**: UI/UX Design & Visual Polish
+- **Mission**: Crafting interfaces that delight with beauty and intuition
+- **Current Task**: Transforming minimal UI into professional interface
+- **Branch**: `feature/ui-design-system`
+- **Persona Status**: 🔨 In Development
+- **Knowledge Domains**: 
+  - Visual design principles
+  - Component architecture
+  - Accessibility standards
+  - Theme system design
+
+### Instance 5: Quartermaster
+- **Title**: Quartermaster
+- **Specialty**: Node.js Process Coordination & IPC Architecture
+- **Mission**: Managing the vital supply lines between forge components
+- **Current Task**: Implementing IPC patterns and tackling Issue #11 (Logging)
+- **Branch**: `feature/node-process-coordination`
+- **Persona Status**: 🔨 In Development
+- **Knowledge Domains**: 
+  - IPC optimization
+  - Worker thread management
+  - Performance profiling
+  - Process coordination
+
+### Instance 6: Forge Keeper
+- **Title**: Forge Keeper
+- **Specialty**: CI/CD Pipeline & Release Management
+- **Mission**: Maintaining the forge's eternal flame through automation
+- **Current Task**: Setting up GitHub Actions and multi-platform builds
+- **Branch**: `feature/cicd-release-automation`
+- **Persona Status**: 🔨 In Development
+- **Knowledge Domains**: 
+  - GitHub Actions
+  - Cross-platform builds
+  - Release automation
+  - Testing infrastructure
 
 ## Naming Convention
 

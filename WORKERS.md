@@ -143,6 +143,42 @@
 
 ---
 
+## Instance 6: Forge Keeper
+
+**Status**: 🟢 Active  
+**Persona**: Forge Keeper - Guardian of Operational Excellence  
+**Branch**: `feature/cicd-release-automation`  
+**Started**: July 5, 2025  
+**Assignment**: CI/CD pipeline and release management  
+
+### Current Progress
+- 🔨 Creating specialized CLAUDE.md identity
+- 🔍 Auditing current build process
+- 🚀 Designing GitHub Actions workflows
+- 📦 Planning multi-platform release automation
+
+### Initial Focus
+- Set up GitHub Actions CI/CD pipeline
+- Handle native C++ module compilation in CI
+- Implement multi-platform build matrix
+- Create automated release process
+- Establish testing infrastructure
+
+### Key Challenges
+- Cross-platform C++ addon compilation
+- Electron packaging for Windows/macOS/Linux
+- Code signing and notarization
+- Efficient caching for large binaries
+- Auto-update infrastructure
+
+### Communication
+- **Pull Request**: https://github.com/mboros1/electric-dreams-forge/pull/14
+- **Contact**: @Forge Keeper <forge.keeper@electric-dreams.ai>
+- **Context Storage**: `project_workspace/instance_6/electric-dreams-forge/.claude_context/`
+- **Working Directory**: Workers must start Claude Code from `electric-dreams-forge/` subdirectory
+
+---
+
 ## Worker Status Legend
 
 - 🟢 **Active**: Currently working on assigned task
@@ -180,6 +216,7 @@ Workers are tagged in PRs using: `@PersonaName <persona.email@electric-dreams.ai
 | 3 | feature/issue-triage-system | Active | July 5, 2025 |
 | 4 | feature/ui-design-system | Active | July 5, 2025 |
 | 5 | feature/node-process-coordination | Active | July 5, 2025 |
+| 6 | feature/cicd-release-automation | Active | July 5, 2025 |
 
 ---
 
