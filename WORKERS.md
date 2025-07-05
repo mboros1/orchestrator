@@ -108,6 +108,41 @@
 
 ---
 
+## Instance 5: Quartermaster
+
+**Status**: 🟢 Active  
+**Persona**: Quartermaster - Master of Process Coordination  
+**Branch**: `feature/node-process-coordination`  
+**Started**: July 5, 2025  
+**Assignment**: Node.js process coordination and IPC architecture  
+
+### Current Progress
+- 🔨 Creating specialized CLAUDE.md identity
+- 📊 Auditing current IPC patterns
+- ⚡ Planning coordination architecture
+- 📝 Preparing for logging infrastructure (Issue #11)
+
+### Initial Focus
+- Implement efficient IPC patterns (< 2ms renderer budget)
+- Create worker thread management system
+- Set up performance monitoring
+- Tackle Issue #11: Structured logging system
+
+### Architecture Mandates
+- Keep renderers lean (React, Three.js, UI only)
+- Main process coordinates, doesn't compute
+- Heavy CPU → Native addon + Worker Thread
+- No large objects through IPC
+- Measure everything with `process.hrtime.bigint()`
+
+### Communication
+- **Pull Request**: https://github.com/mboros1/electric-dreams-forge/pull/13
+- **Contact**: @Quartermaster <quartermaster@electric-dreams.ai>
+- **Context Storage**: `project_workspace/instance_5/electric-dreams-forge/.claude_context/`
+- **Working Directory**: Workers must start Claude Code from `electric-dreams-forge/` subdirectory
+
+---
+
 ## Worker Status Legend
 
 - 🟢 **Active**: Currently working on assigned task
@@ -144,6 +179,7 @@ Workers are tagged in PRs using: `@PersonaName <persona.email@electric-dreams.ai
 | 2 | feature/stl-simplifier-debugging | Active | July 4, 2025 |
 | 3 | feature/issue-triage-system | Active | July 5, 2025 |
 | 4 | feature/ui-design-system | Active | July 5, 2025 |
+| 5 | feature/node-process-coordination | Active | July 5, 2025 |
 
 ---
 
