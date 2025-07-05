@@ -14,6 +14,12 @@
 - ✅ Identified webpack bundling as root cause
 - 🔧 Working on webpack externals configuration
 
+### Knowledge Domains
+- C++ integration patterns
+- Webpack bypass techniques
+- Electron packaging strategies
+- Performance optimization
+
 ### Blocking Issues
 - Webpack transforms `require()` to `__webpack_require__()` preventing native module loading
 
@@ -45,6 +51,12 @@
 - Browser/renderer thread limitations
 - Three.js SimplifyModifier implementation
 
+### Knowledge Domains
+- System behavior interpretation
+- Performance bottleneck detection
+- Error pattern recognition
+- Quality assurance methodology
+
 ### Communication
 - **Pull Request**: [To be created]
 - **Contact**: @Forge Whisperer <forge.whisperer@electric-dreams.ai>
@@ -71,6 +83,12 @@
 - Create welcoming response templates
 - Set up issue classification system
 - Build rapport with community
+
+### Knowledge Domains
+- Community engagement
+- Issue classification
+- User experience focus
+- Documentation clarity
 
 ### Communication
 - **Pull Request**: https://github.com/mboros1/electric-dreams-forge/pull/9
@@ -99,6 +117,12 @@
 - Create cohesive design system
 - Implement dark/light theme support
 - Design core UI components (tabs, panels, toolbars)
+
+### Knowledge Domains
+- Visual design principles
+- Component architecture
+- Accessibility standards
+- Theme system design
 
 ### Communication
 - **Pull Request**: https://github.com/mboros1/electric-dreams-forge/pull/10
@@ -135,6 +159,12 @@
 - No large objects through IPC
 - Measure everything with `process.hrtime.bigint()`
 
+### Knowledge Domains
+- IPC optimization
+- Worker thread management
+- Performance profiling
+- Process coordination
+
 ### Communication
 - **Pull Request**: https://github.com/mboros1/electric-dreams-forge/pull/13
 - **Contact**: @Quartermaster <quartermaster@electric-dreams.ai>
@@ -170,6 +200,12 @@
 - Code signing and notarization
 - Efficient caching for large binaries
 - Auto-update infrastructure
+
+### Knowledge Domains
+- GitHub Actions
+- Cross-platform builds
+- Release automation
+- Testing infrastructure
 
 ### Communication
 - **Pull Request**: https://github.com/mboros1/electric-dreams-forge/pull/14
@@ -217,6 +253,24 @@ Workers are tagged in PRs using: `@PersonaName <persona.email@electric-dreams.ai
 | 4 | feature/ui-design-system | Active | July 5, 2025 |
 | 5 | feature/node-process-coordination | Active | July 5, 2025 |
 | 6 | feature/cicd-release-automation | Active | July 5, 2025 |
+
+## Naming Convention
+
+Worker titles follow the forge/smithing theme:
+- Focus on roles/titles rather than personal names
+- Relate to their technical specialty
+- Maintain the medieval crafting metaphor
+
+## Example Future Personas
+
+Suggestions for future worker assignments:
+- **Interface Forge**: Frontend UI/UX specialist
+- **Data Forge**: Database and state management
+- **Test Forge**: Quality assurance and testing
+- **Cloud Forge**: Backend and API integration
+- **Plugin Forge**: Extension system architect
+- **Render Forge**: 3D graphics and visualization
+- **Script Forge**: Automation and tooling
 
 ---
 
