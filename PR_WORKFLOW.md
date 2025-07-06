@@ -11,13 +11,28 @@ All communication between the Orchestrator and workers happens through GitHub Pu
 When assigning a new task:
 
 ```bash
-# Create feature branch
+# Create feature branch in the project repository
 git checkout -b feature/[descriptive-name]
 git push -u origin feature/[descriptive-name]
 
+# Copy and customize worker files
+cp /path/to/orchestrator/ONBOARDING_TEMPLATE.md ./ONBOARDING.md
+cp -r /path/to/orchestrator/assistant ./
+
+# Edit ONBOARDING.md to fill in:
+# - Branch name (feature/[descriptive-name])
+# - Repository URL
+# - Project-specific setup commands
+# - Any additional context
+
+# Commit worker setup files
+git add ONBOARDING.md assistant/
+git commit -m "Add worker setup files"
+git push
+
 # Create PR with assignment
 gh pr create --title "Worker [X]: [Task Description]" \
-  --body "$(cat ASSIGNMENT_TEMPLATE.md)" \
+  --body "$(cat /path/to/orchestrator/ASSIGNMENT_TEMPLATE.md)" \
   --assignee [github-username]
 ```
 
@@ -32,9 +47,9 @@ Workers are notified by:
 
 After receiving assignment notification:
 1. Clone the project repository
-2. Checkout the assigned feature branch
-3. Copy the `assistant/` directory from orchestrator repo to project root
-4. Follow ONBOARDING.md instructions
+2. Checkout the assigned feature branch (contains ONBOARDING.md and assistant/)
+3. Follow ONBOARDING.md instructions
+4. Start Claude Code from the project repository directory
 
 ### 4. Assignment Format
 

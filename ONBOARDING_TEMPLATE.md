@@ -8,7 +8,7 @@ Welcome to your project workspace! This guide will help you get started with you
 - **Branch**: `[branch-name]`
 - **Remote**: `[repository-url]`
 
-⚠️ **Critical**: See `assistant/WORKER_SETUP_GUIDE.md` in the orchestrator repo for detailed setup instructions to ensure proper context isolation.
+⚠️ **Critical**: See `assistant/WORKER_SETUP_GUIDE.md` (in this directory) for detailed setup instructions to ensure proper context isolation.
 
 ## Getting Started
 
