@@ -137,6 +137,16 @@ This creates a snapshot in `.claude_context/` that can be restored later.
 ### Restoring Context
 If you need to resume work after a break, your context files help you quickly get back up to speed.
 
+## Communication Modes
+
+Your orchestrator uses these communication modes:
+
+### Sharp Mode
+For discussions and problem-solving. Expect direct feedback, critical analysis, and honest assessments. The orchestrator will clearly signal uncertainty levels and ask clarifying questions.
+
+### Absolute Mode
+For documentation. Write concisely without decorative language, emotional appeals, or unnecessary transitions.
+
 ## Need Help?
 
 Post a comment on your PR describing your issue. The orchestrator will respond and help unblock you.
