@@ -2,61 +2,39 @@
 
 ## Overview
 
-To maintain a clean production repository while preserving development history, follow these guidelines for what belongs in the main repository versus what should be archived.
+Guidelines for maintaining clean production repositories while preserving development context.
 
-## What NOT to Commit to Main Repository
+## What NOT to Commit
 
-### 🚫 Workflow Files
-- `ASSIGNMENT.md` - Internal task assignments (kept in PR descriptions)
-- `ONBOARDING.md` - Worker onboarding guides
-- Orchestrator-specific communication files
-- `.claude_context/` - AI context management files (evaluate per project)
+### Workflow Files
+- `ASSIGNMENT.md` - Keep in PR descriptions
+- `ONBOARDING.md` - Worker setup guides
+- Orchestrator communication files
 
-### 🚫 Development Artifacts
-- Temporary test files in root directory
-- Excessive debug logging
-- Personal notes or TODOs
+### Development Artifacts
+- Temporary files
+- Debug logs
+- Personal notes
 - Draft documentation
-- Incomplete implementations
+
+<!-- TODO: Add project-specific exclusions based on your tech stack -->
 
 ## What TO Commit
 
-### ✅ Production Code
-- Source code implementations
-- Proper test files (in appropriate directories)
-- Production configuration files
-- Build scripts and tooling
+### Production Code
+- Source implementations
+- Tests
+- Configuration files
+- Build scripts
 
-### ✅ Documentation
-- Technical documentation (API, architecture)
-- Implementation guides
+### Documentation
+- Technical docs
+- Architecture guides
 - README files
-- Worker-specific CLAUDE.md (in feature branches)
 
-### ✅ Development History
-- Important decision documentation
-- Performance benchmarks
-- Architectural decisions
-- Migration guides
+<!-- TODO: Add project-specific inclusions based on your tech stack -->
 
-## Archive Structure
-
-Preserve development context and history:
-
-```
-archives/
-└── [feature_name]/
-    ├── context/
-    │   └── [saved context files]
-    ├── decisions/
-    │   └── [architectural decisions]
-    └── notes/
-        └── [development notes]
-```
-
-## .gitignore Patterns
-
-Add these to your project's .gitignore:
+## .gitignore Suggestions
 
 ```gitignore
 # Workflow files
@@ -64,37 +42,16 @@ ASSIGNMENT.md
 ONBOARDING.md
 *_TEMPLATE.md
 
-# Context files (optional - project specific)
-.claude_context/
-
-# Temporary files
-*.tmp
-*.log
+# Add your project-specific patterns here
 ```
-
-## Why This Matters
-
-1. **Clean Repository**: Production code isn't cluttered with workflow files
-2. **Preserved History**: Important context is archived, not lost
-3. **Professional Appearance**: Repository shows only relevant code
-4. **Maintainability**: Clear separation between code and process
-
-## Implementation
-
-When preparing a PR:
-1. Review all changed files
-2. Remove workflow-specific files
-3. Archive important context if needed
-4. Update .gitignore if necessary
-5. Keep only production-ready code in commits
 
 ## Best Practices
 
-- Commit early and often to feature branches
-- Clean up before merging to main
-- Document important decisions in appropriate locations
-- Use PR descriptions for task-specific context
+- Keep feature branches messy, main branch clean
+- Archive important context before deleting
+- Use PR descriptions for temporary documentation
+- Review all files before merging
 
 ---
 
-*A clean repository enables efficient collaboration and professional code delivery.*
+*Customize these guidelines based on your project's needs and technology stack.*
