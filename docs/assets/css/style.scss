@@ -1,0 +1,137 @@
+---
+---
+
+@import "{{ site.theme }}";
+
+// Custom styles for Orchestrator docs
+
+.wrapper {
+  max-width: 900px;
+}
+
+// Better code block styling
+pre {
+  background-color: #f6f8fa;
+  border: 1px solid #e1e4e8;
+  border-radius: 6px;
+  padding: 16px;
+  overflow: auto;
+}
+
+code {
+  background-color: rgba(27, 31, 35, 0.05);
+  border-radius: 3px;
+  font-size: 85%;
+  padding: 0.2em 0.4em;
+}
+
+// Mermaid diagram container
+.language-mermaid {
+  text-align: center;
+  background: white;
+  border: 1px solid #e1e4e8;
+  border-radius: 6px;
+  padding: 1em;
+}
+
+// Navigation improvements
+nav ul {
+  list-style: none;
+  padding: 0;
+}
+
+nav li {
+  display: inline-block;
+  margin-right: 1em;
+}
+
+// Better headers
+h1, h2, h3 {
+  color: #24292e;
+  border-bottom: 1px solid #e1e4e8;
+  padding-bottom: 0.3em;
+}
+
+h1 {
+  font-size: 2em;
+}
+
+h2 {
+  font-size: 1.5em;
+  margin-top: 24px;
+}
+
+h3 {
+  font-size: 1.25em;
+  border-bottom: none;
+}
+
+// Improve lists
+ul, ol {
+  padding-left: 2em;
+}
+
+li {
+  margin-bottom: 0.25em;
+}
+
+// Better blockquotes
+blockquote {
+  border-left: 4px solid #0366d6;
+  color: #6a737d;
+  padding-left: 1em;
+  margin-left: 0;
+}
+
+// DO/DON'T sections
+h4:contains("DO ✅") {
+  color: #28a745;
+}
+
+h4:contains("DON'T ❌") {
+  color: #d73a49;
+}
+
+// Call-to-action buttons
+a.button {
+  background-color: #0366d6;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 6px;
+  text-decoration: none;
+  display: inline-block;
+  
+  &:hover {
+    background-color: #0256c7;
+  }
+}
+
+// Footer navigation
+.footer-nav {
+  margin-top: 3em;
+  padding-top: 1em;
+  border-top: 1px solid #e1e4e8;
+  text-align: center;
+}
+
+// Alerts
+.alert {
+  padding: 1em;
+  margin: 1em 0;
+  border-radius: 6px;
+  
+  &.alert-info {
+    background-color: #f1f8ff;
+    border: 1px solid #c8e1ff;
+  }
+  
+  &.alert-warning {
+    background-color: #fffbdd;
+    border: 1px solid #ffe58f;
+  }
+  
+  &.alert-success {
+    background-color: #f0fff4;
+    border: 1px solid #85e89d;
+  }
+}

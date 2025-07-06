@@ -8,11 +8,20 @@
 
 ## Technology Stack
 
-- **Frontend**: [e.g., React, TypeScript, HTML/CSS]
-- **Backend**: [e.g., Node.js, Electron, Python]
-- **Build Tools**: [e.g., Webpack, Vite, Forge]
-- **Testing**: [e.g., Jest, Cypress, Playwright]
-- **Other**: [Additional technologies used]
+<!-- TODO: Fill in your project's technology stack -->
+- **Frontend**: [Your frontend technologies]
+- **Backend**: [Your backend technologies]
+- **Build Tools**: [Your build tools]
+- **Testing**: [Your testing frameworks]
+- **Other**: [Additional technologies]
+
+<!-- Example:
+- **Frontend**: React, TypeScript, Tailwind CSS
+- **Backend**: Node.js, Express, PostgreSQL
+- **Build Tools**: Vite, ESBuild
+- **Testing**: Jest, Playwright
+- **Other**: Docker, Redis
+-->
 
 ## Current Development State
 
