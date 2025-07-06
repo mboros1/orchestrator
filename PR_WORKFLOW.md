@@ -28,7 +28,15 @@ Workers are notified by:
 - **PR Mentions**: Tag workers in PR comments
 - **Email Notification**: GitHub sends emails for assignments and mentions
 
-### 3. Assignment Format
+### 3. Worker Setup
+
+After receiving assignment notification:
+1. Clone the project repository
+2. Checkout the assigned feature branch
+3. Copy the `assistant/` directory from orchestrator repo to project root
+4. Follow ONBOARDING.md instructions
+
+### 4. Assignment Format
 
 PR descriptions should include:
 ```markdown

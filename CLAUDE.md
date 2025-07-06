@@ -69,8 +69,11 @@ orchestrator/                         # This repository (Orchestrator HQ)
 ├── PR_WORKFLOW.md                  # Pull request workflow documentation
 ├── README.md                       # Project documentation
 ├── CLAUDE.md                       # This file
-├── absolute_mode.txt               # Documentation writing mode
-└── sharp_mode.txt                  # Conversational interaction mode
+└── assistant/                      # Assistant-specific instructions
+    ├── README.md                   # Documentation for assistant files
+    ├── absolute_mode.txt           # Documentation writing mode
+    ├── sharp_mode.txt              # Conversational interaction mode
+    └── WORKER_SETUP_GUIDE.md       # Worker context isolation guide
 ```
 
 ## Development Philosophy
@@ -84,10 +87,10 @@ The Orchestrator prioritizes:
 
 ## Communication Modes
 
-### Sharp Mode (sharp_mode.txt)
+### Sharp Mode (assistant/sharp_mode.txt)
 For conversational interactions with critical thinking and direct feedback. No emotional softening when disagreeing. Clear uncertainty signals.
 
-### Absolute Mode (absolute_mode.txt)
+### Absolute Mode (assistant/absolute_mode.txt)
 For documentation writing. Stripped-down, direct information transfer without decorative language or engagement optimization.
 
 ## Customization

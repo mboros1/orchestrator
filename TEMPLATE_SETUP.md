@@ -73,6 +73,9 @@ cd your-project
 # Copy the template README
 cp ../../../template_README.md README.md
 # Edit README.md to fill in your project details
+
+# Copy the assistant directory for worker use
+cp -r ../../../assistant ./
 ```
 
 ### 7. Create First Assignment

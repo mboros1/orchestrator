@@ -79,9 +79,17 @@ your-orchestrator-repo/
 ├── project_workspace/               # Worker instances (gitignored)
 │   └── worker_1/                   # Individual worker workspaces
 │       └── your-project-repo/      # Worker's copy of project
+├── assistant/                       # Claude Code specific instructions
+│   ├── README.md                   # Documentation for assistant files
+│   ├── absolute_mode.txt           # Documentation writing mode
+│   ├── sharp_mode.txt              # Conversational interaction mode
+│   └── WORKER_SETUP_GUIDE.md       # Worker setup instructions
 ├── ASSIGNMENT_TEMPLATE.md           # Template for PR assignments
 ├── ONBOARDING_TEMPLATE.md          # Template for worker onboarding
 ├── PR_WORKFLOW.md                  # Pull request workflow guide
+├── REPOSITORY_HYGIENE.md           # Repository cleanliness guide
+├── TEMPLATE_SETUP.md               # Setup guide for new users
+├── template_README.md              # Template for project README
 ├── CLAUDE.md                       # Orchestrator configuration
 └── README.md                       # This file
 ```

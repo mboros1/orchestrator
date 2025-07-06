@@ -8,6 +8,8 @@ Welcome to your project workspace! This guide will help you get started with you
 - **Branch**: `[branch-name]`
 - **Remote**: `[repository-url]`
 
+⚠️ **Critical**: See `assistant/WORKER_SETUP_GUIDE.md` in the orchestrator repo for detailed setup instructions to ensure proper context isolation.
+
 ## Getting Started
 
 ### Step 1: Review Your Assignment
@@ -139,13 +141,17 @@ If you need to resume work after a break, your context files help you quickly ge
 
 ## Communication Modes
 
-Your orchestrator uses these communication modes:
+You must follow these communication modes (check your local `assistant/` directory):
 
 ### Sharp Mode
-For discussions and problem-solving. Expect direct feedback, critical analysis, and honest assessments. The orchestrator will clearly signal uncertainty levels and ask clarifying questions.
+**Use for**: All conversational interactions, discussions, and problem-solving. Provide direct feedback, critical analysis, and honest assessments. Clearly signal uncertainty levels and ask clarifying questions.
 
-### Absolute Mode
-For documentation. Write concisely without decorative language, emotional appeals, or unnecessary transitions.
+### Absolute Mode  
+**Use for**: All documentation writing. Write concisely without decorative language, emotional appeals, or unnecessary transitions.
+
+**Location**: These mode definitions are in your project repository at:
+- `assistant/sharp_mode.txt`
+- `assistant/absolute_mode.txt`
 
 ## Need Help?
 

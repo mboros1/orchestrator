@@ -44,8 +44,9 @@
 
 ### Initial Setup
 1. Clone the repository and checkout your assigned branch
-2. Review existing code and project structure
-3. Update your branch-specific CLAUDE.md with your understanding
+2. Copy the `assistant/` directory from the orchestrator repo to your project root
+3. Review existing code and project structure
+4. Update your branch-specific CLAUDE.md with your understanding
 
 ### During Development
 - Maintain clear commit messages
