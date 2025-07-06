@@ -54,21 +54,32 @@ Workers are notified by:
 After receiving assignment notification:
 1. Clone the project repository
 2. Checkout the assigned feature branch (contains ONBOARDING.md, assistant/, and starter CLAUDE.md)
-3. Customize the CLAUDE.md file for your needs (but never commit it)
-4. Follow ONBOARDING.md instructions
-5. Start Claude Code from the project repository directory
+3. Customize the CLAUDE.md file for your needs (but never commit to feature branch)
+4. Create your private branch to maintain your growing expertise:
+   ```bash
+   # Create private branch from current state
+   git checkout -b private/[worker-name]/[feature-name]
+   git add CLAUDE.md
+   git commit -m "Initial workspace for [feature-name]"
+   git push -u origin private/[worker-name]/[feature-name]
+   
+   # Return to feature branch
+   git checkout feature/[assigned-branch]
+   # CLAUDE.md remains in working directory but uncommitted
+   ```
+5. Follow ONBOARDING.md instructions
+6. Start Claude Code from the project repository directory
 
-**Optional**: Back up your CLAUDE.md to a private branch:
+**Important**: Regularly backup your CLAUDE.md to your private branch as you learn:
 ```bash
-# Create private branch from current state
-git checkout -b private/[worker-name]/[feature-name]
+# Quick backup workflow (run from feature branch)
+git stash push -m "temp" -- CLAUDE.md
+git checkout private/[worker-name]/[feature-name]
+git stash pop
 git add CLAUDE.md
-git commit -m "Backup my workspace context"
-git push -u origin private/[worker-name]/[feature-name]
-
-# Return to feature branch
+git commit -m "Update: [what you learned]"
+git push
 git checkout feature/[assigned-branch]
-# Continue working - CLAUDE.md remains in working directory but uncommitted
 ```
 
 ### 4. Assignment Format

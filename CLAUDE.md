@@ -22,10 +22,11 @@ The Orchestrator manages:
 - Maintain branch tracking and status
 
 ### 2. Context Management
-- Each worker maintains their own specialized CLAUDE.md in their branch
-- Save `/compact` outputs to `.claude_context/` for knowledge preservation
-- Archive completed feature contexts for future reference
-- Maintain project-wide context awareness
+- Each worker maintains their own CLAUDE.md locally (never committed to feature branch)
+- Workers must backup CLAUDE.md to private branches for knowledge building
+- Save `/compact` outputs to `.claude_context/` for session preservation
+- Private branches accumulate expertise across assignments
+- Workers reference previous CLAUDE.md files when starting new tasks
 
 ### 3. Pull Request Management
 - **Create Assignment PRs**: Open PRs with detailed task descriptions

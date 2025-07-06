@@ -27,34 +27,40 @@ npm start
 npm test
 ```
 
-### Step 3: Customize Your CLAUDE.md
-You've been provided a starter CLAUDE.md. Customize it for your needs:
+### Step 3: Customize Your CLAUDE.md and Create Private Branch
+You've been provided a starter CLAUDE.md. This is your knowledge base that will grow with each assignment:
 
 1. Edit CLAUDE.md to add your task understanding and approach
-2. Update it as you learn more about the codebase
-3. Document your decisions and discoveries
+2. Create your private branch to preserve your growing expertise:
+   ```bash
+   # Create a private branch for your workspace
+   git checkout -b private/[your-name]/[feature-name]
+   git add CLAUDE.md
+   git commit -m "Initial workspace for [feature-name]"
+   git push -u origin private/[your-name]/[feature-name]
+   
+   # Return to feature branch to continue work
+   git checkout feature/[branch-name]
+   ```
+3. Add CLAUDE.md to git exclusions:
+   ```bash
+   echo "CLAUDE.md" >> .git/info/exclude
+   ```
 
-**CRITICAL**: Never commit CLAUDE.md to the feature branch!
+**CRITICAL**: 
+- Never commit CLAUDE.md to the feature branch!
+- Always backup to your private branch as you learn
+- Your CLAUDE.md should grow richer with each assignment
 
-To ensure this:
+### Regular Backups
+As you discover patterns, solve problems, or learn about the codebase:
 ```bash
-# Check your git status regularly
-git status
-
-# If you see CLAUDE.md as a change, DO NOT stage it
-# You can also add it to .git/info/exclude to hide it from git status
-echo "CLAUDE.md" >> .git/info/exclude
-```
-
-**Optional**: Backup your CLAUDE.md to a private branch:
-```bash
-# Create a private branch for your workspace
-git checkout -b private/[your-name]/[feature-name]
-git add CLAUDE.md
-git commit -m "Backup my workspace"
-git push -u origin private/[your-name]/[feature-name]
-
-# Return to feature branch to continue work
+# Quick backup (from feature branch)
+git stash push -m "temp" -- CLAUDE.md
+git checkout private/[your-name]/[feature-name]
+git stash pop
+git commit -am "Update: [what you learned]"
+git push
 git checkout feature/[branch-name]
 ```
 
@@ -142,6 +148,16 @@ This creates a snapshot in `.claude_context/` that can be restored later.
 
 ### Restoring Context
 If you need to resume work after a break, your context files help you quickly get back up to speed.
+
+## Knowledge Continuity
+
+### Starting Your Next Assignment
+When you receive a new assignment:
+1. Check if you have existing private branches with relevant context
+2. Copy useful patterns and knowledge from previous CLAUDE.md files
+3. Build upon your growing expertise
+
+Your private branches form your personal knowledge base for this project.
 
 ## Communication Modes
 
