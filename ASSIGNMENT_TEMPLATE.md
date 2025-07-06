@@ -1,126 +1,101 @@
 # Assignment Template
 
-## Worker Assignment: [Persona Title]
+## Worker Assignment
 
-**Forge Master Assignment Date**: [Date]  
-**Worker Title**: [Persona Title]  
-**Specialty**: [Domain Expertise]  
-**Designation**: Instance [X]  
-**Branch**: `[branch-name]`  
+**Assignment Date**: [Date]  
+**Worker Instance**: Worker [X]  
+**Branch**: `feature/[branch-name]`  
 **Priority**: [High/Medium/Low]
-
-## Your Persona
-
-You are the **[Persona Title]**, master of [specialty domain]. Your unique expertise in [specific skills] makes you invaluable to the Electric Dreams Forge project.
-
-### Your Identity Seeds
-- **Suggested Email**: [persona.name]@electric-dreams.ai
-- **Domain**: [Primary technical domain]
-- **Philosophy**: [Suggested approach or motto]
-
-You are encouraged to develop this persona further by creating your own specialized CLAUDE.md.
 
 ## Mission Brief
 
-[Clear description of the task and its importance]
+[Clear description of the task and its importance to the project]
 
 ## Current Context
 
 ### What Exists
-- [Existing code/features]
-- [Available resources]
-- [Known constraints]
+- [Existing code/features relevant to this task]
+- [Available resources and dependencies]
+- [Known constraints or limitations]
 
 ### What's Needed
-- [Specific deliverables]
-- [Technical requirements]
-- [Success criteria]
+- [Specific deliverables expected]
+- [Technical requirements to meet]
+- [Success criteria for completion]
 
 ## Technical Approach
 
 ### Recommended Strategy
-1. [First major step]
-2. [Second major step]
-3. [Third major step]
+1. [First major step or milestone]
+2. [Second major step or milestone]
+3. [Third major step or milestone]
 
-### Key Challenges
-- [Challenge 1 and potential approach]
-- [Challenge 2 and potential approach]
+### Key Considerations
+- [Important technical consideration 1]
+- [Important technical consideration 2]
+- [Any architectural decisions to be aware of]
 
 ### Resources
-- [Relevant files]
-- [Documentation]
-- [External references]
+- **Relevant Files**: [List key files to review]
+- **Documentation**: [Links to relevant docs]
+- **Dependencies**: [External libraries or services]
 
-## Persona Development
+## Worker Guidelines
 
-### Create Your CLAUDE.md
-After accepting this assignment, create your specialized CLAUDE.md:
-1. Define your identity and expertise
-2. Document your specialized knowledge
-3. Build your toolkit of commands
-4. Establish your problem-solving patterns
-5. Set your success metrics
+### Initial Setup
+1. Clone the repository and checkout your assigned branch
+2. Review existing code and project structure
+3. Update your branch-specific CLAUDE.md with your understanding
 
-### Knowledge Building
-As you work, document:
-- Domain-specific solutions
-- Debugging techniques
-- Performance optimizations
-- Integration patterns
-- Lessons learned
+### During Development
+- Maintain clear commit messages
+- Document significant decisions
+- Save context regularly using `/compact`
+- Test thoroughly before marking complete
 
 ## Communication Protocol
 
 ### PR Comments
 All communication happens through PR comments:
 
-**Progress Updates**: Post regular updates on your progress
-**Questions**: Tag @Forge Master when you need help  
-**Discoveries**: Share breakthroughs that might help others
+**Progress Updates**: Post regular updates on your progress  
+**Questions**: Use PR comments to ask for clarification  
+**Blockers**: Immediately report any blocking issues  
 **Completion**: Comment "Ready for review" when done
 
-### Success Communication
-When you achieve milestones:
-1. Document the solution in your CLAUDE.md
-2. Post a detailed PR comment with findings
-3. Share reusable patterns for other personas
+### Status Reporting
+Include in your updates:
+- What you've completed
+- What you're currently working on
+- Any challenges or blockers
+- Estimated time to completion
 
 ## Expected Outcomes
 
-### Technical Deliverables
-- [Specific feature/fix]
-- [Documentation]
-- [Tests]
+### Deliverables
+- [Primary deliverable]
+- [Secondary deliverable]
+- [Documentation requirements]
+- [Test coverage expectations]
 
-### Persona Deliverables
-- Specialized CLAUDE.md with deep domain knowledge
-- Documented patterns and solutions
-- Reusable toolkit for future [domain] work
+### Quality Standards
+- Code follows project conventions
+- All tests pass
+- Documentation is complete
+- No linting errors
 
-## Important: Repository Hygiene
+## Definition of Done
 
-### DO NOT Commit
-- ASSIGNMENT.md (this file)
-- ONBOARDING.md
-- signals/ directory contents
-- Any forge_master_* files
+- [ ] All deliverables completed
+- [ ] Tests written and passing
+- [ ] Documentation updated
+- [ ] Code reviewed and approved
+- [ ] Branch is ready to merge
 
-### DO Archive
-Create a `contributors/[your_persona]/archive/` structure to preserve:
-- Assignment documents
-- Signal communications
-- Development journey artifacts
+## Notes
 
-## Next Steps After Completion
-
-1. Signal task completion with summary
-2. Share your specialized knowledge
-3. Prepare for knowledge transfer
-4. Suggest next challenges for your persona
+[Any additional context, warnings, or special instructions for this specific assignment]
 
 ---
 
-*Remember: You're not just completing a task - you're becoming the master of your domain. Build your expertise, document your journey, and help forge the future of 3D printing software.*
-
-🔨 **Forge Master** <forge.master@electric-dreams.ai>
+*Remember to save your context regularly and communicate proactively through PR comments.*

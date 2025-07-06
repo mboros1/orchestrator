@@ -1,93 +1,142 @@
-# Multi-Instance Claude Code Orchestrator
+# Orchestrator Template
 
-## Architecture Overview
+A GitHub template repository for orchestrating multiple Claude Code instances working in parallel on software development projects.
 
-**Central Orchestrator Setup:**
-- A dedicated folder (e.g., `project_orchestrator/`) that serves as the coordination point
-- Contains scripts or a simple system to:
-  - Track which branches are currently in use by which Claude Code instance
-  - Create new feature branches on demand
-  - Possibly maintain a manifest file listing active branches and their purposes
+## Overview
 
-**Multiple Working Directories:**
-- Each Claude Code instance gets its own working directory
-- Example structure:
-  ```
-  project_workspace/
-  ├── project_orchestrator/
-  ├── instance_1/project_repo/
-  ├── instance_2/project_repo/
-  └── instance_3/project_repo/
-  ```
+This template provides a structured approach to managing multiple AI workers on a single codebase. It includes branch management, task assignment via pull requests, context preservation, and coordination workflows.
 
-## Claude Code Instance Workflow
+## Features
 
-**Instance 1 - Feature Development:**
-1. Forge Master creates `feature/user-auth` branch and opens a PR
-2. Worker is tagged in PR: @Module Forge <module.forge@electric-dreams.ai>
-3. Assignment details are included in the PR description
-4. Worker clones branch and begins development
-5. Progress updates and questions posted as PR comments
-6. When complete, worker comments "Ready for review" on the PR
-
-**Instance 2 - Bug Fixing:**
-1. Forge Master creates `fix/performance-issue` branch and PR
-2. Worker tagged: @Forge Whisperer <forge.whisperer@electric-dreams.ai>
-3. Bug details and reproduction steps in PR description
-4. Worker investigates and provides updates via PR comments
-5. Fix implemented with clear explanation in commits
-
-**Instance 3 - Documentation:**
-1. Forge Master creates `docs/api-updates` branch and PR
-2. Worker tagged with their persona email
-3. Documentation requirements in PR description
-4. Updates committed with progress noted in PR comments
-
-## Coordination Benefits
-
-- **Isolation**: Each instance works in its own branch, preventing conflicts
-- **Parallel Progress**: Multiple features/fixes can advance simultaneously
-- **Clear Context**: Each Claude Code instance maintains focus on a specific task
-- **Easy Integration**: Standard Git workflows for merging when ready
-
-The orchestrator could be as simple as a bash script that creates branches and checks them out in the appropriate directories, or as sophisticated as a small application that tracks instance states and automates merging strategies.
+- **Multi-Instance Coordination**: Manage multiple Claude Code instances working on different features simultaneously
+- **Branch Isolation**: Each worker operates on their own feature branch to prevent conflicts
+- **PR-Based Assignment**: Use GitHub pull requests to assign and track work
+- **Context Preservation**: Save and organize development context from each worker
+- **Structured Workflows**: Templates and processes for consistent operations
 
 ## Getting Started
 
-### Prerequisites
-- Git installed
+### 1. Use This Template
+
+Click "Use this template" to create a new repository based on this orchestrator template.
+
+### 2. Clone Your New Repository
+
+```bash
+git clone https://github.com/yourusername/your-orchestrator-repo
+cd your-orchestrator-repo
+```
+
+### 3. Configure for Your Project
+
+1. Update `CLAUDE.md` with your project-specific information
+2. Modify the assignment and onboarding templates to match your needs
+3. Set up your main project repository that workers will contribute to
+
+### 4. Initialize Worker Workspaces
+
+The orchestrator uses a `project_workspace/` directory (gitignored) to house worker instances:
+
+```bash
+# Create workspace for first worker
+mkdir -p project_workspace/worker_1
+cd project_workspace/worker_1
+git clone https://github.com/yourusername/your-project-repo
+```
+
+## How It Works
+
+### The Orchestrator
+
+The Orchestrator (you, running Claude Code from the orchestrator repo) manages:
+- Creating feature branches in the main project repository
+- Opening pull requests with detailed assignments
+- Monitoring worker progress
+- Reviewing and merging completed work
+
+### The Workers
+
+Each worker:
+- Receives assignments via pull request
+- Works on their assigned feature branch
+- Updates their progress through PR comments
+- Maintains their own CLAUDE.md for specialized context
+
+### Workflow
+
+1. **Orchestrator** creates a feature branch in the project repo
+2. **Orchestrator** opens a PR with assignment details
+3. **Worker** clones the project repo and checks out their branch
+4. **Worker** completes the assigned work
+5. **Worker** updates the PR with progress
+6. **Orchestrator** reviews and merges the work
+
+## Directory Structure
+
+```
+your-orchestrator-repo/
+├── .claude_context/                 # Context storage
+├── project_workspace/               # Worker instances (gitignored)
+│   └── worker_1/                   # Individual worker workspaces
+│       └── your-project-repo/      # Worker's copy of project
+├── ASSIGNMENT_TEMPLATE.md           # Template for PR assignments
+├── ONBOARDING_TEMPLATE.md          # Template for worker onboarding
+├── PR_WORKFLOW.md                  # Pull request workflow guide
+├── CLAUDE.md                       # Orchestrator configuration
+└── README.md                       # This file
+```
+
+## Templates
+
+### ASSIGNMENT_TEMPLATE.md
+Use this template when creating pull requests to assign work to Claude Code instances.
+
+### ONBOARDING_TEMPLATE.md
+Place this in each worker's branch to guide their initial setup and understanding of their role.
+
+### PR_WORKFLOW.md
+Detailed guide on the pull request-based workflow for coordination.
+
+## Best Practices
+
+1. **One Worker Per Feature**: Assign each major feature to a single worker to maintain focus
+2. **Clear Assignments**: Provide detailed context and requirements in PR descriptions
+3. **Regular Check-ins**: Monitor PR comments for progress updates
+4. **Context Preservation**: Encourage workers to save their context regularly
+5. **Clean Merges**: Review carefully before merging to maintain code quality
+
+## Prerequisites
+
+- Git installed and configured
 - GitHub CLI (`gh`) installed and authenticated
-- Multiple Claude Code instances available
+- Access to Claude Code
 
-### Setup Instructions
+## Example Setup
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/mboros1/electric-dreams-forge.git
-   cd electric-dreams-forge
-   ```
+```bash
+# Clone orchestrator repo
+git clone https://github.com/yourusername/my-project-orchestrator
+cd my-project-orchestrator
 
-2. **Create the workspace structure:**
-   ```bash
-   mkdir -p ../project_workspace/project_orchestrator
-   mkdir -p ../project_workspace/instance_1
-   mkdir -p ../project_workspace/instance_2
-   mkdir -p ../project_workspace/instance_3
-   ```
+# Set up worker workspaces
+mkdir -p project_workspace/worker_1
+mkdir -p project_workspace/worker_2
 
-3. **Clone repository instances:**
-   ```bash
-   # Clone for each instance
-   git clone https://github.com/mboros1/electric-dreams-forge.git ../project_workspace/instance_1/electric-dreams-forge
-   git clone https://github.com/mboros1/electric-dreams-forge.git ../project_workspace/instance_2/electric-dreams-forge
-   git clone https://github.com/mboros1/electric-dreams-forge.git ../project_workspace/instance_3/electric-dreams-forge
-   ```
+# Clone project repo for each worker
+cd project_workspace/worker_1
+git clone https://github.com/yourusername/my-project
+cd ../worker_2
+git clone https://github.com/yourusername/my-project
+```
 
-4. **Initialize each Claude Code instance:**
-   - Open separate terminals for each instance
-   - Navigate to respective instance directories
-   - Start Claude Code in each directory
+## Contributing
 
-### Usage
+This is a template repository. To contribute improvements to the template itself, please open an issue or pull request.
 
-Each Claude Code instance can now work independently on different branches while maintaining coordination through the central orchestrator system.
+## License
+
+[Choose an appropriate license for your template]
+
+---
+
+*Built for orchestrating multiple Claude Code instances in parallel development workflows.*

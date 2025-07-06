@@ -2,11 +2,11 @@
 
 ## Overview
 
-All communication between the Forge Master and workers happens through GitHub Pull Requests. This leverages GitHub's built-in notification system and provides a clear audit trail of all development activities.
+All communication between the Orchestrator and workers happens through GitHub Pull Requests. This leverages GitHub's built-in notification system and provides a clear audit trail of all development activities.
 
 ## Workflow Steps
 
-### 1. Assignment Creation (Forge Master)
+### 1. Assignment Creation (Orchestrator)
 
 When assigning a new task:
 
@@ -16,25 +16,25 @@ git checkout -b feature/[descriptive-name]
 git push -u origin feature/[descriptive-name]
 
 # Create PR with assignment
-gh pr create --title "[Persona]: [Task Description]" \
-  --body "$(cat ONBOARDING_TEMPLATE.md)" \
+gh pr create --title "Worker [X]: [Task Description]" \
+  --body "$(cat ASSIGNMENT_TEMPLATE.md)" \
   --assignee [github-username]
 ```
 
 ### 2. Worker Notification
 
 Workers are notified by:
-- **Tagging in PR**: `@Module Forge <module.forge@electric-dreams.ai>`
 - **PR Assignment**: Using GitHub's assignee feature
-- **Email Notification**: GitHub sends email to tagged users
+- **PR Mentions**: Tag workers in PR comments
+- **Email Notification**: GitHub sends emails for assignments and mentions
 
 ### 3. Assignment Format
 
-PR descriptions include:
+PR descriptions should include:
 ```markdown
-## Assignment for @Module Forge <module.forge@electric-dreams.ai>
+## Assignment for Worker [X]
 
-### Your Mission
+### Task Overview
 [Clear description of the task]
 
 ### Technical Requirements
@@ -50,7 +50,7 @@ PR descriptions include:
 - [Documentation links]
 
 ---
-*See ONBOARDING.md in your branch for detailed setup instructions*
+*See ONBOARDING.md in your branch for setup instructions*
 ```
 
 ## Communication Patterns
@@ -58,25 +58,26 @@ PR descriptions include:
 ### Progress Updates
 
 Workers post PR comments for:
-- **Daily Updates**: Brief summary of progress
+- **Regular Updates**: Summary of progress
 - **Blockers**: Issues requiring assistance
 - **Questions**: Technical clarifications needed
 - **Discoveries**: Important findings or insights
 
 Example:
 ```markdown
-## Progress Update - Day 2
+## Progress Update - [Date]
 
 ✅ Completed:
-- Implemented webpack externals configuration
-- Tested in development environment
+- Implemented feature X
+- Added unit tests
+- Updated documentation
 
 🔧 In Progress:
-- Testing production build
-- Documenting configuration changes
+- Integration testing
+- Performance optimization
 
 ❓ Question:
-Should we use @vercel/webpack-asset-relocator-loader or stick with manual configuration?
+Should we use approach A or B for handling edge case Y?
 ```
 
 ### Requesting Help
@@ -85,16 +86,16 @@ When blocked:
 ```markdown
 ## 🚨 Blocked - Need Assistance
 
-**Issue**: Native module fails to load in packaged app
-**Error**: `Cannot find module './build/Release/addon.node'`
+**Issue**: [Description of the problem]
+**Error**: [Error message if applicable]
 **Attempted Solutions**:
-1. Updated asarUnpack patterns
-2. Added extraResource configuration
-3. Verified file exists in app.asar.unpacked
+1. [What you tried first]
+2. [What you tried next]
+3. [Other attempts]
 
-**Next Steps**: Need help debugging the production path resolution.
+**Context**: [Additional relevant information]
 
-@Forge Master - could you take a look at the forge.config.js changes?
+Could you provide guidance on how to proceed?
 ```
 
 ### Ready for Review
@@ -109,57 +110,56 @@ When work is complete:
 - Documentation updated
 
 **Key Changes**:
-- `src/main.js`: Added eval('require') for native module loading
-- `forge.config.js`: Updated ASAR unpacking configuration
-- `docs/`: Added troubleshooting guide
+- `file1.js`: [What changed and why]
+- `file2.js`: [What changed and why]
+- `docs/`: [Documentation updates]
 
 **Testing**:
-- ✅ Development mode
-- ✅ Production build
-- ✅ Cross-platform (macOS, Windows, Linux)
+- ✅ Unit tests
+- ✅ Integration tests
+- ✅ Manual testing
 
 Ready to merge when approved!
 ```
 
-## Forge Master Responses
+## Orchestrator Responses
 
 ### Code Review
 - Use PR review feature for inline comments
 - Approve or request changes through GitHub UI
-- Tag worker in comments: `@Module Forge <module.forge@electric-dreams.ai>`
+- Provide clear feedback on what needs adjustment
 
 ### Providing Guidance
 ```markdown
-@Module Forge <module.forge@electric-dreams.ai> 
+Good question! For this use case, I recommend approach A because:
+1. [Reason 1]
+2. [Reason 2]
+3. [Reason 3]
 
-Good question! For this use case, I recommend using the manual configuration approach because:
-1. More control over path resolution
-2. Fewer dependencies
-3. Easier to debug
-
-Here's an example configuration:
-```js
-// webpack.main.config.js
-externals: {
-  './build/Release/addon.node': 'commonjs ./build/Release/addon.node'
-}
+Here's an example:
+```code
+// Example implementation
 ```
+
+Let me know if you need more clarification!
 ```
 
 ## Best Practices
 
 ### DO:
 - Keep PR descriptions clear and actionable
-- Update progress regularly (at least every 2 days)
+- Update progress regularly
 - Use GitHub's formatting features (checkboxes, code blocks, etc.)
 - Tag people when you need their attention
 - Close resolved conversation threads
+- Include relevant commit messages
 
 ### DON'T:
-- Create separate issues for questions (use PR comments)
+- Create separate issues for task questions (use PR comments)
 - Wait too long before asking for help
 - Commit workflow files (ASSIGNMENT.md, ONBOARDING.md)
 - Use external communication channels for project discussions
+- Force push after review has started
 
 ## Automation Opportunities
 
@@ -167,7 +167,7 @@ externals: {
 - Auto-assign PRs based on branch names
 - Add labels based on PR content
 - Run tests on PR updates
-- Notify Forge Master of stale PRs
+- Notify orchestrator of stale PRs
 
 ### PR Templates
 Create `.github/pull_request_template.md` for consistent formatting
@@ -176,17 +176,30 @@ Create `.github/pull_request_template.md` for consistent formatting
 - Require PR reviews before merging
 - Enforce status checks
 - Prevent force pushes
+- Require up-to-date branches
+
+## Merge Strategy
+
+### Before Merging
+1. All CI checks passing
+2. Code review approved
+3. No unresolved conversations
+4. Branch is up to date with base branch
+
+### Merge Options
+- **Squash and Merge**: For feature branches (recommended)
+- **Merge Commit**: For preserving detailed history
+- **Rebase and Merge**: For linear history
 
 ## Summary
 
 The PR workflow provides:
 - **Centralized Communication**: All discussions in one place
-- **Clear History**: Full audit trail of decisions
+- **Clear History**: Full audit trail of decisions and changes
 - **GitHub Integration**: Notifications, reviews, and automation
 - **Professional Process**: Industry-standard development workflow
+- **Traceability**: Every change linked to its purpose and discussion
 
 ---
 
-*"In the forge of collaboration, PRs are our hammer and anvil"*
-
-🔨 **Forge Master** <forge.master@electric-dreams.ai>
+*Effective communication through PRs ensures smooth collaboration and high-quality code delivery.*

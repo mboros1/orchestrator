@@ -1,18 +1,12 @@
-# Worker Onboarding: [Persona Name]
+# Worker Onboarding
 
-Welcome to your Electric Dreams Forge workspace! This guide will help you get started with your assignment.
-
-## Your Role
-
-**Title**: [Persona Title]  
-**Specialty**: [Domain Expertise]  
-**Mission**: [Your specific mission]
+Welcome to your project workspace! This guide will help you get started with your assignment.
 
 ## Your Workspace
 
 - **Working Directory**: THIS directory - always start Claude Code here!
 - **Branch**: `[branch-name]`
-- **Remote**: `https://github.com/mboros1/electric-dreams-forge.git`
+- **Remote**: `[repository-url]`
 
 ## Getting Started
 
@@ -21,7 +15,7 @@ Your assignment is in the PR description at: [PR URL]
 
 ### Step 2: Set Up Your Environment
 ```bash
-# Install dependencies
+# Install dependencies (example - adjust for your project)
 npm install
 
 # Run development mode
@@ -31,27 +25,30 @@ npm start
 npm test
 ```
 
-### Step 3: Create Your Persona (First Task)
-Create your specialized CLAUDE.md to establish your identity:
+### Step 3: Configure Your CLAUDE.md
+Create or update your branch-specific CLAUDE.md to document your understanding and approach:
 ```bash
 cat > CLAUDE.md << 'EOF'
-# [Persona Title] - [Your Specialty]
+# Worker Instance - [Feature/Task Name]
 
-**Title**: [Your Title]
-**Specialty**: [Your Domain]
-**Mission**: [Your Purpose]
-**Email**: [persona.name]@electric-dreams.ai
+**Branch**: [branch-name]
+**Task**: [Brief description]
+**Started**: [Date]
 
-## My Purpose
-[Your role description]
+## Task Understanding
+[Your understanding of the assignment]
 
-## Core Expertise
-[Your specialized knowledge]
+## Technical Approach
+[Your planned approach]
 
-## My Tools of the Trade
-[Your specialized toolkit]
+## Progress Log
+[Track your progress here]
 
-[Continue building your identity...]
+## Key Decisions
+[Document important decisions]
+
+## Challenges & Solutions
+[Track problems and how you solved them]
 EOF
 ```
 
@@ -80,9 +77,9 @@ All communication happens through PR comments:
 
 **Issue**: [Description]
 **What I've Tried**: [Your attempts]
-**Next Steps**: [What you think might help]
+**Context**: [Relevant information]
 
-@Forge Master - could you provide guidance?
+Could you provide guidance?
 ```
 
 **Ready for Review**:
@@ -90,25 +87,27 @@ All communication happens through PR comments:
 ## Ready for Review
 
 All tasks complete and tested. Key changes:
-- [File 1]: [What changed]
-- [File 2]: [What changed]
+- [Summary of changes]
+- [Files modified]
 
 Ready to merge!
 ```
 
 ## Development Workflow
 
-### Daily Routine
-1. Check PR for new comments
-2. Post progress update if significant work done
+### Best Practices
+1. Check PR for new comments regularly
+2. Post progress updates when reaching milestones
 3. Ask questions early - don't stay blocked
-4. Commit with clear messages
+4. Commit with clear, descriptive messages
+5. Save context using `/compact` regularly
 
 ### Before Marking Complete
 - [ ] All acceptance criteria met
 - [ ] Tests passing
-- [ ] Code documented
-- [ ] Persona CLAUDE.md created/updated
+- [ ] Code follows project conventions
+- [ ] Documentation updated
+- [ ] CLAUDE.md reflects current state
 - [ ] Final "Ready for Review" comment posted
 
 ## Important Notes
@@ -116,20 +115,32 @@ Ready to merge!
 ### DO NOT Commit
 - This ONBOARDING.md file
 - Any ASSIGNMENT.md files
-- Workflow-related documents
+- Temporary or workflow files
 
 ### DO Commit
-- Your specialized CLAUDE.md
+- Your updated CLAUDE.md
 - All code changes
 - Documentation updates
 - Test files
+- Configuration changes
+
+## Context Management
+
+### Saving Context
+Use the `/compact` command regularly to save your working context:
+```
+/compact
+```
+
+This creates a snapshot in `.claude_context/` that can be restored later.
+
+### Restoring Context
+If you need to resume work after a break, your context files help you quickly get back up to speed.
 
 ## Need Help?
 
-Post a comment on your PR and tag @Forge Master. We're here to help you succeed!
+Post a comment on your PR describing your issue. The orchestrator will respond and help unblock you.
 
 ---
 
-*"Welcome to the forge - may your code be strong and your bugs be few!"*
-
-🔨 **Forge Master** <forge.master@electric-dreams.ai>
+*Remember: Clear communication and regular updates help ensure smooth collaboration!*

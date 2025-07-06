@@ -2,14 +2,14 @@
 
 ## Overview
 
-To maintain a clean production repository while preserving our rich development history, we follow these guidelines for what belongs in the main repository versus what should be archived.
+To maintain a clean production repository while preserving development history, follow these guidelines for what belongs in the main repository versus what should be archived.
 
 ## What NOT to Commit to Main Repository
 
-### 🚫 Forge Workflow Files
-- `ASSIGNMENT.md` - Internal task assignments (now in PR descriptions)
+### 🚫 Workflow Files
+- `ASSIGNMENT.md` - Internal task assignments (kept in PR descriptions)
 - `ONBOARDING.md` - Worker onboarding guides
-- `forge_master_*.md` - Any Forge Master communications
+- Orchestrator-specific communication files
 - `.claude_context/` - AI context management files (evaluate per project)
 
 ### 🚫 Development Artifacts
@@ -17,72 +17,84 @@ To maintain a clean production repository while preserving our rich development 
 - Excessive debug logging
 - Personal notes or TODOs
 - Draft documentation
+- Incomplete implementations
 
 ## What TO Commit
 
 ### ✅ Production Code
 - Source code implementations
-- Proper test files (in `test/` directory)
+- Proper test files (in appropriate directories)
 - Production configuration files
 - Build scripts and tooling
 
 ### ✅ Documentation
 - Technical documentation (API, architecture)
-- Solution explanations (like `WEBPACK_NATIVE_MODULE_SOLUTION.md`)
+- Implementation guides
 - README files
-- Specialized CLAUDE.md (worker personas)
+- Worker-specific CLAUDE.md (in feature branches)
 
 ### ✅ Development History
-- `contributors/[persona]/[date]_[feature].md` - Development logs
 - Important decision documentation
 - Performance benchmarks
+- Architectural decisions
+- Migration guides
 
 ## Archive Structure
 
-Preserve forge communications and journey artifacts:
+Preserve development context and history:
 
 ```
-contributors/
-└── [persona_name]/
-    ├── archive/
-    │   ├── onboarding/
-    │   │   └── ONBOARDING.md
-    │   └── journey/
-    │       └── [development artifacts]
-    └── [date]_[feature].md  # Public development log
+archives/
+└── [feature_name]/
+    ├── context/
+    │   └── [saved context files]
+    ├── decisions/
+    │   └── [architectural decisions]
+    └── notes/
+        └── [development notes]
 ```
 
 ## .gitignore Patterns
 
-Add these to project .gitignore:
+Add these to your project's .gitignore:
 
 ```gitignore
-# Forge workflow files
+# Workflow files
 ASSIGNMENT.md
 ONBOARDING.md
-forge_master_*.md
+*_TEMPLATE.md
 
-# Optional (project-specific)
+# Context files (optional - project specific)
 .claude_context/
+
+# Temporary files
+*.tmp
+*.log
 ```
 
 ## Why This Matters
 
 1. **Clean Repository**: Production code isn't cluttered with workflow files
 2. **Preserved History**: Important context is archived, not lost
-3. **Professional Appearance**: Public repository shows only relevant code
-4. **Searchability**: Contributors' work is organized and findable
+3. **Professional Appearance**: Repository shows only relevant code
+4. **Maintainability**: Clear separation between code and process
 
 ## Implementation
 
 When preparing a PR:
 1. Review all changed files
-2. Move workflow files to archive structure
-3. Update .gitignore if needed
-4. Keep only production-ready code in the commit
+2. Remove workflow-specific files
+3. Archive important context if needed
+4. Update .gitignore if necessary
+5. Keep only production-ready code in commits
+
+## Best Practices
+
+- Commit early and often to feature branches
+- Clean up before merging to main
+- Document important decisions in appropriate locations
+- Use PR descriptions for task-specific context
 
 ---
 
-*"A clean repository is like a well-organized forge - everything in its place, ready for crafting excellence."*
-
-🔨 **Forge Master** <forge.master@electric-dreams.ai>
+*A clean repository enables efficient collaboration and professional code delivery.*
