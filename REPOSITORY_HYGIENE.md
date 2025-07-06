@@ -9,6 +9,7 @@ Guidelines for maintaining clean production repositories while preserving develo
 ### Workflow Files
 - `ASSIGNMENT.md` - Keep in PR descriptions
 - `ONBOARDING.md` - Worker setup guides
+- Worker CLAUDE.md files - Keep in private branches only
 - Orchestrator communication files
 
 ### Development Artifacts

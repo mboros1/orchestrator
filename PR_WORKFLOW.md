@@ -18,6 +18,7 @@ git push -u origin feature/[descriptive-name]
 # Copy and customize worker files
 cp /path/to/orchestrator/ONBOARDING_TEMPLATE.md ./ONBOARDING.md
 cp -r /path/to/orchestrator/assistant ./
+cp /path/to/orchestrator/template_CLAUDE.md ./CLAUDE.md  # Generic starter
 
 # Edit ONBOARDING.md to fill in:
 # - Branch name (feature/[descriptive-name])
@@ -25,8 +26,13 @@ cp -r /path/to/orchestrator/assistant ./
 # - Project-specific setup commands
 # - Any additional context
 
+# Edit CLAUDE.md to add:
+# - Project-specific context
+# - Feature-specific guidance
+# - Task-relevant information
+
 # Commit worker setup files
-git add ONBOARDING.md assistant/
+git add ONBOARDING.md assistant/ CLAUDE.md
 git commit -m "Add worker setup files"
 git push
 
@@ -47,9 +53,23 @@ Workers are notified by:
 
 After receiving assignment notification:
 1. Clone the project repository
-2. Checkout the assigned feature branch (contains ONBOARDING.md and assistant/)
-3. Follow ONBOARDING.md instructions
-4. Start Claude Code from the project repository directory
+2. Checkout the assigned feature branch (contains ONBOARDING.md, assistant/, and starter CLAUDE.md)
+3. Customize the CLAUDE.md file for your needs (but never commit it)
+4. Follow ONBOARDING.md instructions
+5. Start Claude Code from the project repository directory
+
+**Optional**: Back up your CLAUDE.md to a private branch:
+```bash
+# Create private branch from current state
+git checkout -b private/[worker-name]/[feature-name]
+git add CLAUDE.md
+git commit -m "Backup my workspace context"
+git push -u origin private/[worker-name]/[feature-name]
+
+# Return to feature branch
+git checkout feature/[assigned-branch]
+# Continue working - CLAUDE.md remains in working directory but uncommitted
+```
 
 ### 4. Assignment Format
 

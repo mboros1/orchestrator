@@ -45,8 +45,8 @@
 ### Initial Setup
 1. Clone the repository and checkout your assigned branch
 2. Review ONBOARDING.md (already in your branch)
-3. Review existing code and project structure
-4. Create/update your branch-specific CLAUDE.md with your understanding
+3. Customize CLAUDE.md with your understanding (but never commit it)
+4. Review existing code and project structure
 
 ### During Development
 - Maintain clear commit messages

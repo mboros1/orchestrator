@@ -49,13 +49,14 @@ When using `/compact`, outputs are saved to:
 
 ### Worker Assignment Process
 1. Create feature branch for the worker
-2. Copy and customize ONBOARDING.md and assistant/ to the branch
+2. Copy and customize ONBOARDING.md, assistant/, and template_CLAUDE.md to the branch
 3. Commit these setup files to the branch
 4. Open PR with detailed assignment in description
 5. Worker clones repo and checks out their branch
-6. Worker follows ONBOARDING.md and creates their CLAUDE.md
-7. Progress tracked through PR comments
-8. Review and merge when complete
+6. Worker customizes CLAUDE.md locally (never commits it)
+7. Worker optionally backs up CLAUDE.md to private branch
+8. Progress tracked through PR comments
+9. Review and merge feature branch when complete
 
 ### Directory Structure
 ```

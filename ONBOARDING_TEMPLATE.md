@@ -27,31 +27,35 @@ npm start
 npm test
 ```
 
-### Step 3: Configure Your CLAUDE.md
-Create or update your branch-specific CLAUDE.md to document your understanding and approach:
+### Step 3: Customize Your CLAUDE.md
+You've been provided a starter CLAUDE.md. Customize it for your needs:
+
+1. Edit CLAUDE.md to add your task understanding and approach
+2. Update it as you learn more about the codebase
+3. Document your decisions and discoveries
+
+**CRITICAL**: Never commit CLAUDE.md to the feature branch!
+
+To ensure this:
 ```bash
-cat > CLAUDE.md << 'EOF'
-# Worker Instance - [Feature/Task Name]
+# Check your git status regularly
+git status
 
-**Branch**: [branch-name]
-**Task**: [Brief description]
-**Started**: [Date]
+# If you see CLAUDE.md as a change, DO NOT stage it
+# You can also add it to .git/info/exclude to hide it from git status
+echo "CLAUDE.md" >> .git/info/exclude
+```
 
-## Task Understanding
-[Your understanding of the assignment]
+**Optional**: Backup your CLAUDE.md to a private branch:
+```bash
+# Create a private branch for your workspace
+git checkout -b private/[your-name]/[feature-name]
+git add CLAUDE.md
+git commit -m "Backup my workspace"
+git push -u origin private/[your-name]/[feature-name]
 
-## Technical Approach
-[Your planned approach]
-
-## Progress Log
-[Track your progress here]
-
-## Key Decisions
-[Document important decisions]
-
-## Challenges & Solutions
-[Track problems and how you solved them]
-EOF
+# Return to feature branch to continue work
+git checkout feature/[branch-name]
 ```
 
 ## Communication Protocol
