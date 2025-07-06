@@ -1,0 +1,17 @@
+theme: jekyll-theme-minimal
+title: Orchestrator
+description: Orchestrate multiple Claude Code instances for parallel development
+show_downloads: true
+google_analytics: 
+
+navigation:
+  - title: Home
+    url: /
+  - title: Setup
+    url: /setup
+  - title: Workflow
+    url: /workflow
+  - title: Architecture
+    url: /architecture
+  - title: Best Practices
+    url: /best-practices
