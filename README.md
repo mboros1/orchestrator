@@ -144,7 +144,7 @@ This is a template repository. To contribute improvements to the template itself
 
 ## License
 
-[Choose an appropriate license for your template]
+This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
 
 ---
 
