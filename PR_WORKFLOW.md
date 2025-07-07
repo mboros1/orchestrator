@@ -2,44 +2,49 @@
 
 ## Overview
 
-All communication between the Orchestrator and workers happens through GitHub Pull Requests. This leverages GitHub's built-in notification system and provides a clear audit trail of all development activities.
+All communication between the Orchestrator (me - a Claude Code instance) and workers (other Claude Code instances) happens through GitHub Pull Requests. This leverages GitHub's built-in notification system and provides a clear audit trail of all development activities.
+
+## Important: Understanding the Roles
+
+- **Orchestrator**: I am a Claude Code instance managing the project
+- **Workers**: Other Claude Code instances doing the implementation
+- **You**: The human providing direction and making decisions
 
 ## Workflow Steps
 
-### 1. Assignment Creation (Orchestrator)
+### 1. Assignment Creation (What I Do as Orchestrator)
 
-When assigning a new task:
+When you describe a task to me, I will:
 
 ```bash
-# Create feature branch in the project repository
-git checkout -b feature/[descriptive-name]
-git push -u origin feature/[descriptive-name]
+# Create feature branch in your project repository
+git checkout -b feature/user-authentication
+git push -u origin feature/user-authentication
 
-# Copy and customize worker files
-cp /path/to/orchestrator/ONBOARDING_TEMPLATE.md ./ONBOARDING.md
-cp -r /path/to/orchestrator/assistant ./
-cp /path/to/orchestrator/template_CLAUDE.md ./CLAUDE.md  # Generic starter
+# Generate customized worker files based on your project
+# I'll create ONBOARDING.md with:
+# - Your specific setup commands (npm install, etc.)
+# - Your project structure
+# - Your coding standards
 
-# Edit ONBOARDING.md to fill in:
-# - Branch name (feature/[descriptive-name])
-# - Repository URL
-# - Project-specific setup commands
-# - Any additional context
+# I'll create CLAUDE.md with:
+# - Understanding of your tech stack
+# - Relevant patterns from your codebase
+# - Context specific to this feature
 
-# Edit CLAUDE.md to add:
-# - Project-specific context
-# - Feature-specific guidance
-# - Task-relevant information
+# I'll include the assistant/ directory for communication modes
 
-# Commit worker setup files
+# Commit everything the worker needs
 git add ONBOARDING.md assistant/ CLAUDE.md
-git commit -m "Add worker setup files"
+git commit -m "Add worker setup files for authentication feature"
 git push
 
-# Create PR with assignment
-gh pr create --title "Worker [X]: [Task Description]" \
-  --body "$(cat /path/to/orchestrator/ASSIGNMENT_TEMPLATE.md)" \
-  --assignee [github-username]
+# Create detailed PR with assignment
+# I'll fill in the assignment template with:
+# - Clear requirements based on our discussion
+# - Success criteria
+# - Technical approach
+# - Resources and context
 ```
 
 ### 2. Worker Notification

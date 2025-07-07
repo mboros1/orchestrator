@@ -1,10 +1,10 @@
 # Orchestrator Template
 
-A GitHub template repository for orchestrating multiple Claude Code instances working in parallel on software development projects.
+A GitHub template repository that creates an AI Orchestrator - a Claude Code instance that manages multiple AI workers on your software development project.
 
 ## Overview
 
-This template provides a structured approach to managing multiple AI workers on a single codebase. It includes branch management, task assignment via pull requests, context preservation, and coordination workflows.
+This template sets up an Orchestrator agent (a Claude Code instance) that coordinates parallel development by managing other Claude Code instances (workers). The Orchestrator works with you to understand your project needs, creates assignments, and ensures smooth integration of work.
 
 ## Features
 
@@ -18,58 +18,59 @@ This template provides a structured approach to managing multiple AI workers on 
 
 ### 1. Use This Template
 
-Click "Use this template" to create a new repository based on this orchestrator template.
+Click "Use this template" to create your orchestrator repository.
 
-### 2. Clone Your New Repository
+### 2. Clone and Start Your Orchestrator
 
 ```bash
 git clone https://github.com/yourusername/your-orchestrator-repo
 cd your-orchestrator-repo
+claude  # Start Claude Code - this activates your Orchestrator
 ```
 
-### 3. Configure for Your Project
+### 3. Work with Your Orchestrator
 
-1. Update `CLAUDE.md` with your project-specific information
-2. Modify the assignment and onboarding templates to match your needs
-3. Set up your main project repository that workers will contribute to
+Your Orchestrator will:
+1. Ask you about your project to understand its needs
+2. Help refine its own CLAUDE.md with project-specific context
+3. Prepare to manage workers for your project
 
-### 4. Initialize Worker Workspaces
+### 4. Describe Your First Task
 
-The orchestrator uses a `project_workspace/` directory (gitignored) to house worker instances:
+Tell your Orchestrator what you need:
+- "I need user authentication for my Express.js app"
+- "We need to refactor the frontend to use React hooks"
+- "Help me migrate from MongoDB to PostgreSQL"
 
-```bash
-# Create workspace for first worker
-mkdir -p project_workspace/worker_1
-cd project_workspace/worker_1
-git clone https://github.com/yourusername/your-project-repo
-```
+The Orchestrator will handle creating assignments and setting up workers.
 
 ## How It Works
 
-### The Orchestrator
+### The Orchestrator (Claude Code Instance)
 
-The Orchestrator (you, running Claude Code from the orchestrator repo) manages:
-- Creating feature branches in the main project repository
-- Opening pull requests with detailed assignments
-- Monitoring worker progress
-- Reviewing and merging completed work
+The Orchestrator is a Claude Code instance that:
+- Lives in this orchestrator repository
+- Works with you to understand project requirements
+- Creates and customizes all worker assignments
+- Manages multiple AI workers in parallel
+- Continuously improves its understanding of your project
 
-### The Workers
+### The Workers (Other Claude Code Instances)
 
-Each worker:
-- Receives assignments via pull request
-- Works on their assigned feature branch
-- Updates their progress through PR comments
-- Maintains their own CLAUDE.md for specialized context
+Each worker is a separate Claude Code instance that:
+- Receives customized assignments from the Orchestrator
+- Works on isolated feature branches
+- Builds specialized expertise over time
+- Communicates progress through PR comments
 
-### Workflow
+### The Workflow
 
-1. **Orchestrator** creates a feature branch in the project repo
-2. **Orchestrator** opens a PR with assignment details
-3. **Worker** clones the project repo and checks out their branch
-4. **Worker** completes the assigned work
-5. **Worker** updates the PR with progress
-6. **Orchestrator** reviews and merges the work
+1. **You** describe what you need to the Orchestrator
+2. **Orchestrator** breaks down the work and creates assignments
+3. **Orchestrator** sets up customized environments for each worker
+4. **Workers** develop features in parallel
+5. **Orchestrator** monitors progress and facilitates integration
+6. **You** review and approve the final results
 
 ## Directory Structure
 
