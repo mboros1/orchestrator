@@ -1,10 +1,10 @@
 # Orchestrator
 
-A GitHub template for orchestrating multiple Claude Code instances working in parallel on software development projects.
+A GitHub template that creates an AI Orchestrator - a Claude Code instance that manages multiple AI workers on your software development project.
 
 ## What is Orchestrator?
 
-Orchestrator provides a structured approach to managing multiple AI workers on a single codebase. It enables parallel development through branch isolation, PR-based communication, and systematic knowledge building.
+Orchestrator is an agentic AI system where a primary Claude Code instance (the Orchestrator) coordinates multiple other Claude Code instances (workers) to build software in parallel. You describe what you need, and the Orchestrator handles breaking down work, creating assignments, and managing integration.
 
 ## Key Features
 
@@ -25,13 +25,22 @@ Orchestrator provides a structured approach to managing multiple AI workers on a
 
 ```mermaid
 graph TD
-    A[Orchestrator] -->|Creates Branch| B[Feature Branch]
-    A -->|Assigns Work| C[Pull Request]
-    D[Worker] -->|Checks Out| B
-    D -->|Updates Progress| C
-    D -->|Builds Knowledge| E[Private Branch]
-    A -->|Reviews & Merges| B
+    A[You] -->|Describe Need| B[Orchestrator AI]
+    B -->|Creates Assignments| C[Worker 1]
+    B -->|Creates Assignments| D[Worker 2]  
+    B -->|Creates Assignments| E[Worker 3]
+    C -->|Develops| F[Feature Branch 1]
+    D -->|Develops| G[Feature Branch 2]
+    E -->|Develops| H[Feature Branch 3]
+    B -->|Integrates| I[Main Branch]
+    I -->|Delivers| A
 ```
+
+1. **You** tell the Orchestrator what you need
+2. **Orchestrator** understands requirements and creates assignments
+3. **Workers** develop features in parallel
+4. **Orchestrator** manages integration
+5. **You** review the results
 
 ## Documentation
 
