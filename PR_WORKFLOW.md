@@ -21,21 +21,25 @@ When you describe a task to me, I will:
 git checkout -b feature/user-authentication
 git push -u origin feature/user-authentication
 
-# Generate customized worker files based on your project
-# I'll create ONBOARDING.md with:
-# - Your specific setup commands (npm install, etc.)
-# - Your project structure
-# - Your coding standards
+# Use MCP tools to set up worker environment efficiently
+mcp__orchestrator__create_worker \
+  --workerName "worker_1" \
+  --projectRepo "https://github.com/user/project"
 
-# I'll create CLAUDE.md with:
-# - Understanding of your tech stack
-# - Relevant patterns from your codebase
-# - Context specific to this feature
+mcp__orchestrator__setup_branch \
+  --branchName "feature/user-authentication"
 
-# I'll include the assistant/ directory for communication modes
+mcp__orchestrator__copy_templates
 
-# Commit everything the worker needs
-git add ONBOARDING.md assistant/ CLAUDE.md
+# Fill templates with project-specific information
+mcp__orchestrator__fill_templates \
+  --projectInfo '{"branchName": "feature/user-authentication", ...}'
+
+# Validate no placeholders remain
+mcp__orchestrator__validate_templates
+
+# Commit customized templates
+git add ONBOARDING.md ASSIGNMENT.md assistant/
 git commit -m "Add worker setup files for authentication feature"
 git push
 
@@ -87,7 +91,21 @@ git push
 git checkout feature/[assigned-branch]
 ```
 
-### 4. Assignment Format
+### 4. Template System (v1.2)
+
+The orchestrator uses an automated template system to ensure consistent worker setup:
+
+#### Placeholders
+All templates use `__ORCH_*__` format placeholders that are automatically filled:
+- `__ORCH_BRANCH_NAME__` → `feature/user-authentication`
+- `__ORCH_WORKER_NAME__` → `worker_1`
+- `__ORCH_PR_URL__` → `https://github.com/user/project/pull/123`
+- See TEMPLATE_MANIFEST.md for complete list
+
+#### Validation
+The `validate_templates` tool ensures no placeholders are missed, preventing setup errors.
+
+### 5. Assignment Format
 
 PR descriptions should include:
 ```markdown

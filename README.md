@@ -45,6 +45,7 @@ This template sets up an Orchestrator agent (a Claude Code instance) that coordi
 - **Context Preservation**: Save and organize development context from each worker
 - **Structured Workflows**: Templates and processes for consistent operations
 - **MCP Tools**: Efficient worker management through specialized tools
+- **Automated Template System**: Validates and fills placeholders to prevent setup errors
 - **Intelligent Research**: Orchestrator researches your tech stack and best practices before creating workers
 - **Domain Expertise**: Builds deep understanding of your project through structured research
 - **Codebase Analysis**: Can analyze existing projects to auto-generate PROJECT_SPEC.md
@@ -96,7 +97,8 @@ your-orchestrator-repo/
 │   ├── package.json                # Server dependencies
 │   └── README.md                   # MCP server documentation
 ├── ASSIGNMENT_TEMPLATE.md           # Template for PR assignments
-├── ONBOARDING_TEMPLATE.md          # Template for worker onboarding
+├── ONBOARDING_TEMPLATE.md          # Template for worker onboarding (v1.2)
+├── TEMPLATE_MANIFEST.md            # Registry of all template placeholders
 ├── PR_WORKFLOW.md                  # Pull request workflow guide
 ├── REPOSITORY_HYGIENE.md           # Repository cleanliness guide
 ├── TEMPLATE_SETUP.md               # Setup guide for new users
@@ -117,6 +119,25 @@ Place this in each worker's branch to guide their initial setup and understandin
 ### PR_WORKFLOW.md
 Detailed guide on the pull request-based workflow for coordination.
 
+## Template System
+
+The Orchestrator uses a versioned template system (v1.2) with automated validation:
+
+### Template Placeholders
+All placeholders use the format `__ORCH_*__` for easy identification:
+- `__ORCH_BRANCH_NAME__` - Feature branch name
+- `__ORCH_WORKER_NAME__` - Worker identifier
+- `__ORCH_PR_URL__` - Pull request URL
+- And more (see TEMPLATE_MANIFEST.md for full list)
+
+### Automated Workflow
+1. **Copy**: `copy_templates` copies templates to worker
+2. **Fill**: `fill_templates` replaces placeholders automatically
+3. **Validate**: `validate_templates` ensures no placeholders remain
+4. **Customize**: Add project-specific sections at predefined markers
+
+This prevents common issues like missing placeholders or incomplete customization.
+
 ## Best Practices
 
 1. **One Worker Per Feature**: Assign each major feature to a single worker to maintain focus
@@ -124,6 +145,7 @@ Detailed guide on the pull request-based workflow for coordination.
 3. **Regular Check-ins**: Monitor PR comments for progress updates
 4. **Context Preservation**: Encourage workers to save their context regularly
 5. **Clean Merges**: Review carefully before merging to maintain code quality
+6. **Template Validation**: Always run `validate_templates` before creating PRs
 
 ## Prerequisites
 
@@ -153,13 +175,15 @@ claude --mcp-config mcp-config.json
 
 ### Available MCP Tools
 
-When using the MCP configuration, I have access to these specialized tools:
+When using the MCP configuration, the Orchestrator has access to these specialized tools:
 
-- **`mcp__orchestrator__create_worker`** - Creates worker workspace and clones project
-- **`mcp__orchestrator__setup_branch`** - Creates and checks out feature branches
-- **`mcp__orchestrator__copy_templates`** - Copies templates to worker projects
-- **`mcp__orchestrator__create_private_branch`** - Sets up private branches for CLAUDE.md
-- **`mcp__orchestrator__backup_claudemd`** - Backs up worker knowledge to private branches
+- **`create_worker`** - Creates worker workspace and clones project repository
+- **`setup_branch`** - Creates and checks out feature branches for workers
+- **`copy_templates`** - Copies onboarding and context templates to worker projects
+- **`fill_templates`** - Automatically fills template placeholders with project-specific values
+- **`validate_templates`** - Validates templates to ensure no placeholders remain unfilled
+- **`manage_private_branch`** - Manages private branches for CLAUDE.md persistence (create/backup actions)
+- **`activate_mode`** - Switches between Sharp (conversational) and Absolute (formal writing) modes
 
 These tools handle complex operations atomically with better error handling than manual commands.
 
