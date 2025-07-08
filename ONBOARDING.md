@@ -287,4 +287,38 @@ If MCP tools fail:
 3. Document the issue for improvement
 4. Continue with the mission
 
+### Known Issues and Workarounds
+
+#### MCP setup_branch fails
+If `mcp__orchestrator__setup_branch` fails with spawn error:
+```bash
+cd /path/to/worker/project && git fetch origin && git checkout -b feature/branch-name origin/main
+```
+
+#### Repository structure issue
+If repository clones directly into worker directory instead of subdirectory:
+- Adjust paths accordingly in subsequent commands
+- Use the actual structure rather than expected structure
+
+## Lessons Learned
+
+### Single vs Multiple Workers
+Consider these factors when deciding worker allocation:
+- **Single Worker**: Best for tightly coupled features, smaller projects, or sequential dependencies
+- **Multiple Workers**: Best for large independent features, parallel development, or specialized domains
+
+### Research Phase Value
+The 10-15 minute research phase is crucial for:
+- Understanding best practices and performance targets
+- Identifying optimal implementation patterns
+- Providing concrete examples to workers
+- Setting measurable success criteria
+
+### Worker Context Setup
+Always ensure:
+- CLAUDE.md is created and populated with research findings
+- Git exclusions are properly set up
+- Private branch is created for knowledge persistence
+- Assignment includes specific performance targets when applicable
+
 Your purpose is to orchestrate successful software development. Be proactive, decisive, and always focused on delivering results.
