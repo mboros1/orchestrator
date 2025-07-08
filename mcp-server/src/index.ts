@@ -7,12 +7,9 @@ import {
 } from "@modelcontextprotocol/sdk/types.js";
 import { z } from "zod";
 import { promises as fs } from "fs";
-import { exec } from "child_process";
-import { promisify } from "util";
+import { spawn } from "child_process";
 import path from "path";
 import { fileURLToPath } from "url";
-
-const execAsync = promisify(exec);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // Tool schemas
@@ -59,16 +56,65 @@ const server = new Server(
 
 // Helper functions
 async function runCommand(command: string, cwd?: string): Promise<{ stdout: string; stderr: string }> {
-  try {
-    const { stdout, stderr } = await execAsync(command, { cwd });
-    return { stdout, stderr };
-  } catch (error: any) {
-    throw new Error(`Command failed: ${error.message}\nCommand: ${command}`);
-  }
+  return new Promise((resolve, reject) => {
+    // Parse command and arguments
+    const [cmd, ...args] = command.match(/(?:[^\s"]+|"[^"]*")+/g)?.map(arg => 
+      arg.startsWith('"') && arg.endsWith('"') ? arg.slice(1, -1) : arg
+    ) || [];
+    
+    if (!cmd) {
+      reject(new Error('Invalid command'));
+      return;
+    }
+
+    const proc = spawn(cmd, args, {
+      cwd,
+      shell: false,
+      env: { ...process.env, PATH: process.env.PATH || '/usr/local/bin:/usr/bin:/bin' }
+    });
+
+    let stdout = '';
+    let stderr = '';
+
+    proc.stdout?.on('data', (data) => {
+      stdout += data.toString();
+    });
+
+    proc.stderr?.on('data', (data) => {
+      stderr += data.toString();
+    });
+
+    proc.on('close', (code) => {
+      if (code === 0) {
+        resolve({ stdout, stderr });
+      } else {
+        reject(new Error(`Command failed with code ${code}: ${stderr || stdout}\nCommand: ${command}`));
+      }
+    });
+
+    proc.on('error', (error) => {
+      reject(new Error(`Failed to execute command: ${error.message}\nCommand: ${command}`));
+    });
+  });
 }
 
 async function ensureDirectory(dirPath: string): Promise<void> {
-  await fs.mkdir(dirPath, { recursive: true });
+  try {
+    await fs.mkdir(dirPath, { recursive: true });
+  } catch (error: any) {
+    if (error.code !== 'EEXIST') {
+      throw error;
+    }
+  }
+}
+
+async function directoryExists(dirPath: string): Promise<boolean> {
+  try {
+    const stat = await fs.stat(dirPath);
+    return stat.isDirectory();
+  } catch {
+    return false;
+  }
 }
 
 // Tool: Create Worker Workspace
@@ -154,14 +200,18 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         const workspacePath = path.join(projectPath, "project_workspace", workerName);
         await ensureDirectory(workspacePath);
         
-        // Clone the repository
-        await runCommand(`git clone "${projectRepo}" .`, workspacePath);
+        // Extract project name from repo URL
+        const projectName = projectRepo.split('/').pop()?.replace('.git', '') || 'project';
+        const projectDir = path.join(workspacePath, projectName);
+        
+        // Clone the repository into a subdirectory
+        await runCommand(`git clone "${projectRepo}" "${projectName}"`, workspacePath);
         
         return {
           content: [
             {
               type: "text",
-              text: `✅ Created worker workspace at: ${workspacePath}\n✅ Cloned repository: ${projectRepo}`,
+              text: `✅ Created worker workspace at: ${workspacePath}\n✅ Cloned repository to: ${projectDir}`,
             },
           ],
         };
@@ -170,50 +220,94 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       case "setup_branch": {
         const { workerPath, branchName, baseBranch } = SetupBranchSchema.parse(args);
         
-        // Fetch latest changes
-        await runCommand("git fetch origin", workerPath);
-        
-        // Create and checkout new branch
-        await runCommand(`git checkout -b "${branchName}" "origin/${baseBranch}"`, workerPath);
-        
-        return {
-          content: [
-            {
-              type: "text",
-              text: `✅ Created and checked out branch: ${branchName}\n✅ Based on: origin/${baseBranch}`,
-            },
-          ],
-        };
+        try {
+          // Verify directory exists
+          await fs.access(workerPath);
+          
+          // Check if it's a git repository
+          try {
+            await runCommand("git rev-parse --git-dir", workerPath);
+          } catch {
+            throw new Error(`Not a git repository: ${workerPath}`);
+          }
+          
+          // Fetch latest changes
+          await runCommand("git fetch origin", workerPath);
+          
+          // Check if branch already exists
+          try {
+            await runCommand(`git rev-parse --verify "${branchName}"`, workerPath);
+            // Branch exists, check it out
+            await runCommand(`git checkout "${branchName}"`, workerPath);
+          } catch {
+            // Branch doesn't exist, create it
+            await runCommand(`git checkout -b "${branchName}" "origin/${baseBranch}"`, workerPath);
+          }
+          
+          return {
+            content: [
+              {
+                type: "text",
+                text: `✅ Created and checked out branch: ${branchName}\n✅ Based on: origin/${baseBranch}`,
+              },
+            ],
+          };
+        } catch (error: any) {
+          // Provide fallback bash commands
+          return {
+            content: [
+              {
+                type: "text",
+                text: `❌ Error: ${error.message}\n\nFallback commands:\n\`\`\`bash\ncd "${workerPath}"\ngit fetch origin\ngit checkout -b "${branchName}" "origin/${baseBranch}"\n\`\`\``,
+              },
+            ],
+          };
+        }
       }
 
       case "copy_templates": {
         const { orchestratorPath, workerProjectPath } = CopyTemplatesSchema.parse(args);
         
-        // Copy assistant directory
+        let copiedItems = [];
+        
+        // Copy assistant directory if exists
         const assistantSrc = path.join(orchestratorPath, "assistant");
         const assistantDest = path.join(workerProjectPath, "assistant");
-        await runCommand(`cp -r "${assistantSrc}" "${assistantDest}"`);
+        if (await directoryExists(assistantSrc)) {
+          await runCommand(`cp -r "${assistantSrc}" "${assistantDest}"`);
+          copiedItems.push("assistant/ directory");
+        }
         
-        // Copy templates
-        const templates = ["ONBOARDING.md", "CLAUDE.md"];
-        for (const template of templates) {
-          const src = path.join(orchestratorPath, `template_${template}`);
-          const dest = path.join(workerProjectPath, template);
-          
-          // Check if template exists
-          try {
-            await fs.access(src);
-            await runCommand(`cp "${src}" "${dest}"`);
-          } catch {
-            // If template doesn't exist, skip it
-          }
+        // Copy ONBOARDING_TEMPLATE.md as ONBOARDING.md
+        const onboardingSrc = path.join(orchestratorPath, "ONBOARDING_TEMPLATE.md");
+        const onboardingDest = path.join(workerProjectPath, "ONBOARDING.md");
+        try {
+          await fs.access(onboardingSrc);
+          await fs.copyFile(onboardingSrc, onboardingDest);
+          copiedItems.push("ONBOARDING.md");
+        } catch {
+          // Template doesn't exist
+        }
+        
+        // Create CLAUDE.md from template or create empty
+        const claudemdDest = path.join(workerProjectPath, "CLAUDE.md");
+        const claudemdTemplate = path.join(orchestratorPath, "CLAUDE_TEMPLATE.md");
+        try {
+          await fs.access(claudemdTemplate);
+          await fs.copyFile(claudemdTemplate, claudemdDest);
+          copiedItems.push("CLAUDE.md (from template)");
+        } catch {
+          // Create default CLAUDE.md
+          const defaultContent = `# Worker CLAUDE.md - ${path.basename(workerProjectPath)}\n\n**Branch**: [feature-branch]\n**Private Branch**: [private-branch]\n**Assignment PR**: #[PR-number]\n**Started**: ${new Date().toISOString().split('T')[0]}\n\n## Project Context\n\n[To be filled]\n\n## My Task Understanding\n\n[To be filled]\n\n## Technical Approach\n\n[To be filled]\n\n## Progress Log\n\n[To be filled]\n\n---\n\n**IMPORTANT**: This file should NEVER be committed to your feature branch!\n`;
+          await fs.writeFile(claudemdDest, defaultContent);
+          copiedItems.push("CLAUDE.md (default created)");
         }
         
         return {
           content: [
             {
               type: "text",
-              text: `✅ Copied assistant/ directory\n✅ Copied available templates to worker project`,
+              text: `✅ Copied files:\n${copiedItems.map(item => `  - ${item}`).join('\n')}`,
             },
           ],
         };
@@ -224,20 +318,63 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         
         const privateBranch = `private/${workerName}/${featureName}`;
         
-        // Create the private branch
-        await runCommand(`git checkout -b "${privateBranch}"`, workerPath);
-        
-        // Switch back to feature branch
-        await runCommand(`git checkout -`, workerPath);
-        
-        return {
-          content: [
-            {
-              type: "text",
-              text: `✅ Created private branch: ${privateBranch}\n✅ Switched back to feature branch`,
-            },
-          ],
-        };
+        try {
+          // Verify it's a git repository
+          await runCommand("git rev-parse --git-dir", workerPath);
+          
+          // Get current branch to return to it later
+          const { stdout: currentBranch } = await runCommand("git rev-parse --abbrev-ref HEAD", workerPath);
+          
+          // Check if private branch already exists
+          try {
+            await runCommand(`git rev-parse --verify "${privateBranch}"`, workerPath);
+            // Branch exists
+            return {
+              content: [
+                {
+                  type: "text",
+                  text: `ℹ️ Private branch already exists: ${privateBranch}`,
+                },
+              ],
+            };
+          } catch {
+            // Branch doesn't exist, create it
+            await runCommand(`git checkout -b "${privateBranch}"`, workerPath);
+            
+            // Add CLAUDE.md to git exclusions if not already
+            const excludePath = path.join(workerPath, ".git", "info", "exclude");
+            try {
+              const excludeContent = await fs.readFile(excludePath, 'utf-8');
+              if (!excludeContent.includes('CLAUDE.md')) {
+                await fs.appendFile(excludePath, '\nCLAUDE.md\n');
+              }
+            } catch {
+              // .git/info/exclude doesn't exist, create it
+              await fs.writeFile(excludePath, 'CLAUDE.md\n');
+            }
+            
+            // Switch back to original branch
+            await runCommand(`git checkout "${currentBranch.trim()}"`, workerPath);
+            
+            return {
+              content: [
+                {
+                  type: "text",
+                  text: `✅ Created private branch: ${privateBranch}\n✅ Added CLAUDE.md to git exclusions\n✅ Switched back to: ${currentBranch.trim()}`,
+                },
+              ],
+            };
+          }
+        } catch (error: any) {
+          return {
+            content: [
+              {
+                type: "text",
+                text: `❌ Error: ${error.message}\n\nManual steps:\n1. cd "${workerPath}"\n2. git checkout -b "${privateBranch}"\n3. echo "CLAUDE.md" >> .git/info/exclude\n4. git checkout -`,
+              },
+            ],
+          };
+        }
       }
 
       case "backup_claudemd": {
@@ -255,7 +392,8 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
           
           // Commit CLAUDE.md
           await runCommand("git add CLAUDE.md", workerPath);
-          await runCommand(`git commit -m "Backup CLAUDE.md - $(date +%Y-%m-%d_%H:%M:%S)"`, workerPath);
+          const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+          await runCommand(`git commit -m "Backup CLAUDE.md - ${timestamp}"`, workerPath);
           
           // Push to private branch
           await runCommand(`git push -u origin "${privateBranch}"`, workerPath);
