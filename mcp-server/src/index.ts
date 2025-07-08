@@ -32,15 +32,12 @@ const CopyTemplatesSchema = z.object({
   workerProjectPath: z.string().describe("Path to worker's project directory"),
 });
 
-const CreatePrivateBranchSchema = z.object({
+const ManagePrivateBranchSchema = z.object({
+  action: z.enum(["create", "backup"]).describe("Action to perform: 'create' new private branch or 'backup' CLAUDE.md"),
   workerPath: z.string().describe("Path to worker's project directory"),
-  workerName: z.string().describe("Name of the worker"),
-  featureName: z.string().describe("Feature name for the private branch"),
-});
-
-const BackupClaudemdSchema = z.object({
-  workerPath: z.string().describe("Path to worker's project directory"),
-  privateBranch: z.string().describe("Private branch name"),
+  workerName: z.string().optional().describe("Name of the worker (required for create)"),
+  featureName: z.string().optional().describe("Feature name for the private branch (required for create)"),
+  privateBranch: z.string().optional().describe("Private branch name (required for backup)"),
 });
 
 const ValidateTemplatesSchema = z.object({
@@ -64,6 +61,10 @@ const FillTemplatesSchema = z.object({
     replacements: z.record(z.string(), z.string()).optional(),
     appendSections: z.record(z.string(), z.string()).optional(),
   })).optional().describe("Template-specific customizations"),
+});
+
+const ActivateModeSchema = z.object({
+  mode: z.enum(["sharp", "absolute"]).describe("Mode to activate: 'sharp' for conversational, 'absolute' for formal writing"),
 });
 
 // Create MCP server
@@ -185,28 +186,22 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
         },
       },
       {
-        name: "create_private_branch",
-        description: "Create a private branch for worker's CLAUDE.md backup",
+        name: "manage_private_branch",
+        description: "Manage private branches for CLAUDE.md persistence. Use action='create' to set up a new private branch, action='backup' to save current CLAUDE.md.",
         inputSchema: {
           type: "object",
           properties: {
+            action: { 
+              type: "string", 
+              enum: ["create", "backup"],
+              description: "Action to perform" 
+            },
             workerPath: { type: "string", description: "Path to worker's project directory" },
-            workerName: { type: "string", description: "Name of the worker" },
-            featureName: { type: "string", description: "Feature name for the private branch" },
+            workerName: { type: "string", description: "Worker name (required for create action)" },
+            featureName: { type: "string", description: "Feature name (required for create action)" },
+            privateBranch: { type: "string", description: "Private branch name (required for backup action)" },
           },
-          required: ["workerPath", "workerName", "featureName"],
-        },
-      },
-      {
-        name: "backup_claudemd",
-        description: "Backup CLAUDE.md to worker's private branch",
-        inputSchema: {
-          type: "object",
-          properties: {
-            workerPath: { type: "string", description: "Path to worker's project directory" },
-            privateBranch: { type: "string", description: "Private branch name" },
-          },
-          required: ["workerPath", "privateBranch"],
+          required: ["action", "workerPath"],
         },
       },
       {
@@ -259,21 +254,18 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
         },
       },
       {
-        name: "activate_sharp_mode",
-        description: "CRITICAL: Activate Sharp Mode by reading assistant/sharp_mode.txt. USE THIS: At conversation start, every 10-15 messages, after breaks, when writing becomes cushioned/apologetic, before critical analysis.",
+        name: "activate_mode",
+        description: "Activate communication mode. Sharp Mode (default): Use for all conversational interactions, planning, analysis. Absolute Mode: Use when writing formal outputs - documentation, PRs, issues, commit messages. Switch back to Sharp immediately after.",
         inputSchema: {
           type: "object",
-          properties: {},
-          required: [],
-        },
-      },
-      {
-        name: "activate_absolute_mode",
-        description: "Activate Absolute Mode for documentation writing. USE THIS: ONLY when writing *.md files, README files, or other documentation. Switch back to Sharp Mode immediately after documentation task.",
-        inputSchema: {
-          type: "object",
-          properties: {},
-          required: [],
+          properties: {
+            mode: { 
+              type: "string", 
+              enum: ["sharp", "absolute"],
+              description: "Mode to activate: 'sharp' for conversational interaction, 'absolute' for formal writing (docs, PRs, issues)" 
+            },
+          },
+          required: ["mode"],
         },
       },
     ],
@@ -418,44 +410,115 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         };
       }
 
-      case "create_private_branch": {
-        const { workerPath, workerName, featureName } = CreatePrivateBranchSchema.parse(args);
+      case "manage_private_branch": {
+        const parsed = ManagePrivateBranchSchema.parse(args);
+        const { action, workerPath } = parsed;
         
-        const privateBranch = `private/${workerName}/${featureName}`;
-        
-        try {
-          // Verify it's a git repository
-          await runCommand("git rev-parse --git-dir", workerPath);
-          
-          // Get current branch to return to it later
-          const { stdout: currentBranch } = await runCommand("git rev-parse --abbrev-ref HEAD", workerPath);
-          
-          // Check if private branch already exists
-          try {
-            await runCommand(`git rev-parse --verify "${privateBranch}"`, workerPath);
-            // Branch exists
+        if (action === "create") {
+          // Validate required fields for create action
+          if (!parsed.workerName || !parsed.featureName) {
             return {
               content: [
                 {
                   type: "text",
-                  text: `ℹ️ Private branch already exists: ${privateBranch}`,
+                  text: `❌ Error: workerName and featureName are required for create action`,
                 },
               ],
             };
-          } catch {
-            // Branch doesn't exist, create it
-            await runCommand(`git checkout -b "${privateBranch}"`, workerPath);
+          }
+          
+          const privateBranch = `private/${parsed.workerName}/${parsed.featureName}`;
+          
+          try {
+            // Verify it's a git repository
+            await runCommand("git rev-parse --git-dir", workerPath);
             
-            // Add CLAUDE.md to git exclusions if not already
-            const excludePath = path.join(workerPath, ".git", "info", "exclude");
+            // Get current branch to return to it later
+            const { stdout: currentBranch } = await runCommand("git rev-parse --abbrev-ref HEAD", workerPath);
+            
+            // Check if private branch already exists
             try {
-              const excludeContent = await fs.readFile(excludePath, 'utf-8');
-              if (!excludeContent.includes('CLAUDE.md')) {
-                await fs.appendFile(excludePath, '\nCLAUDE.md\n');
-              }
+              await runCommand(`git rev-parse --verify "${privateBranch}"`, workerPath);
+              // Branch exists
+              return {
+                content: [
+                  {
+                    type: "text",
+                    text: `ℹ️ Private branch already exists: ${privateBranch}`,
+                  },
+                ],
+              };
             } catch {
-              // .git/info/exclude doesn't exist, create it
-              await fs.writeFile(excludePath, 'CLAUDE.md\n');
+              // Branch doesn't exist, create it
+              await runCommand(`git checkout -b "${privateBranch}"`, workerPath);
+              
+              // Add CLAUDE.md to git exclusions if not already
+              const excludePath = path.join(workerPath, ".git", "info", "exclude");
+              try {
+                const excludeContent = await fs.readFile(excludePath, 'utf-8');
+                if (!excludeContent.includes('CLAUDE.md')) {
+                  await fs.appendFile(excludePath, '\nCLAUDE.md\n');
+                }
+              } catch {
+                // .git/info/exclude doesn't exist, create it
+                await fs.writeFile(excludePath, 'CLAUDE.md\n');
+              }
+              
+              // Switch back to original branch
+              await runCommand(`git checkout "${currentBranch.trim()}"`, workerPath);
+              
+              return {
+                content: [
+                  {
+                    type: "text",
+                    text: `✅ Created private branch: ${privateBranch}\n✅ Added CLAUDE.md to git exclusions\n✅ Switched back to: ${currentBranch.trim()}`,
+                  },
+                ],
+              };
+            }
+          } catch (error: any) {
+            return {
+              content: [
+                {
+                  type: "text",
+                  text: `❌ Error: ${error.message}\n\nManual steps:\n1. cd "${workerPath}"\n2. git checkout -b "${privateBranch}"\n3. echo "CLAUDE.md" >> .git/info/exclude\n4. git checkout -`,
+                },
+              ],
+            };
+          }
+        } else {
+          // Backup action
+          if (!parsed.privateBranch) {
+            return {
+              content: [
+                {
+                  type: "text",
+                  text: `❌ Error: privateBranch is required for backup action`,
+                },
+              ],
+            };
+          }
+          
+          try {
+            // Get current branch
+            const { stdout: currentBranch } = await runCommand("git rev-parse --abbrev-ref HEAD", workerPath);
+            
+            // Switch to private branch
+            await runCommand(`git checkout "${parsed.privateBranch}"`, workerPath);
+            
+            // Check if CLAUDE.md exists
+            try {
+              await fs.access(path.join(workerPath, "CLAUDE.md"));
+              
+              // Commit CLAUDE.md
+              await runCommand("git add CLAUDE.md", workerPath);
+              const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+              await runCommand(`git commit -m "Backup CLAUDE.md - ${timestamp}"`, workerPath);
+              
+              // Push to private branch
+              await runCommand(`git push -u origin "${parsed.privateBranch}"`, workerPath);
+            } catch {
+              // CLAUDE.md doesn't exist yet
             }
             
             // Switch back to original branch
@@ -465,58 +528,21 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
               content: [
                 {
                   type: "text",
-                  text: `✅ Created private branch: ${privateBranch}\n✅ Added CLAUDE.md to git exclusions\n✅ Switched back to: ${currentBranch.trim()}`,
+                  text: `✅ Backed up CLAUDE.md to: ${parsed.privateBranch}\n✅ Returned to feature branch`,
+                },
+              ],
+            };
+          } catch (error: any) {
+            return {
+              content: [
+                {
+                  type: "text",
+                  text: `❌ Error backing up: ${error.message}`,
                 },
               ],
             };
           }
-        } catch (error: any) {
-          return {
-            content: [
-              {
-                type: "text",
-                text: `❌ Error: ${error.message}\n\nManual steps:\n1. cd "${workerPath}"\n2. git checkout -b "${privateBranch}"\n3. echo "CLAUDE.md" >> .git/info/exclude\n4. git checkout -`,
-              },
-            ],
-          };
         }
-      }
-
-      case "backup_claudemd": {
-        const { workerPath, privateBranch } = BackupClaudemdSchema.parse(args);
-        
-        // Get current branch
-        const { stdout: currentBranch } = await runCommand("git rev-parse --abbrev-ref HEAD", workerPath);
-        
-        // Switch to private branch
-        await runCommand(`git checkout "${privateBranch}"`, workerPath);
-        
-        // Check if CLAUDE.md exists
-        try {
-          await fs.access(path.join(workerPath, "CLAUDE.md"));
-          
-          // Commit CLAUDE.md
-          await runCommand("git add CLAUDE.md", workerPath);
-          const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-          await runCommand(`git commit -m "Backup CLAUDE.md - ${timestamp}"`, workerPath);
-          
-          // Push to private branch
-          await runCommand(`git push -u origin "${privateBranch}"`, workerPath);
-        } catch {
-          // CLAUDE.md doesn't exist yet
-        }
-        
-        // Switch back to original branch
-        await runCommand(`git checkout "${currentBranch.trim()}"`, workerPath);
-        
-        return {
-          content: [
-            {
-              type: "text",
-              text: `✅ Backed up CLAUDE.md to: ${privateBranch}\n✅ Returned to feature branch`,
-            },
-          ],
-        };
       }
 
       case "validate_templates": {
@@ -586,48 +612,38 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         }
       }
 
-      case "activate_sharp_mode": {
-        const sharpModePath = path.join(process.cwd(), "assistant", "sharp_mode.txt");
+      case "activate_mode": {
+        const { mode } = ActivateModeSchema.parse(args);
+        const modePath = path.join(process.cwd(), "assistant", `${mode}_mode.txt`);
+        
         try {
-          const content = await fs.readFile(sharpModePath, 'utf-8');
-          return {
-            content: [
-              {
-                type: "text",
-                text: `Sharp Mode Activated. Instructions loaded:\n\n${content}\n\nMaintain this mode for all subsequent interactions.`,
-              },
-            ],
-          };
+          const content = await fs.readFile(modePath, 'utf-8');
+          
+          if (mode === "sharp") {
+            return {
+              content: [
+                {
+                  type: "text",
+                  text: `Sharp Mode Activated. Instructions loaded:\n\n${content}\n\nMaintain this mode for all subsequent interactions.`,
+                },
+              ],
+            };
+          } else {
+            return {
+              content: [
+                {
+                  type: "text",
+                  text: `Absolute Mode Activated for documentation writing.\n\n${content}\n\nREMEMBER: Return to Sharp Mode after completing documentation.`,
+                },
+              ],
+            };
+          }
         } catch (error: any) {
           return {
             content: [
               {
                 type: "text",
-                text: `❌ Failed to activate Sharp Mode: ${error.message}`,
-              },
-            ],
-          };
-        }
-      }
-
-      case "activate_absolute_mode": {
-        const absoluteModePath = path.join(process.cwd(), "assistant", "absolute_mode.txt");
-        try {
-          const content = await fs.readFile(absoluteModePath, 'utf-8');
-          return {
-            content: [
-              {
-                type: "text",
-                text: `Absolute Mode Activated for documentation writing.\n\n${content}\n\nREMEMBER: Return to Sharp Mode after completing documentation.`,
-              },
-            ],
-          };
-        } catch (error: any) {
-          return {
-            content: [
-              {
-                type: "text",
-                text: `❌ Failed to activate Absolute Mode: ${error.message}`,
+                text: `❌ Failed to activate ${mode} mode: ${error.message}`,
               },
             ],
           };
