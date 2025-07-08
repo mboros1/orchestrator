@@ -2,6 +2,37 @@
 
 A GitHub template repository that creates an AI Orchestrator - a Claude Code instance that manages multiple AI workers on your software development project.
 
+## 🚀 Quick Start
+
+### 1. Clone your orchestrator repository:
+```bash
+git clone https://github.com/yourusername/your-orchestrator-repo
+cd your-orchestrator-repo
+```
+
+### 2. Set up the MCP server:
+```bash
+cd mcp-server && npm install && npm run build && cd ..
+```
+
+### 3. (Optional) Create PROJECT_SPEC.md:
+Choose one:
+- Fill out `PROJECT_SPEC.md` manually with your project details
+- Use `GENERATE_PROJECT_SPEC_PROMPT.md` to analyze existing code
+- Ask the Orchestrator to analyze your repository directly
+
+### 4. Launch your Orchestrator:
+```bash
+claude --mcp-config mcp-config.json
+```
+
+### 5. Start with this message:
+```
+Hello! Please read your ONBOARDING.md to get started
+```
+
+That's it! Your Orchestrator will read its instructions, research your tech stack, and be ready to manage your project intelligently.
+
 ## Overview
 
 This template sets up an Orchestrator agent (a Claude Code instance) that coordinates parallel development by managing other Claude Code instances (workers). The Orchestrator works with you to understand your project needs, creates assignments, and ensures smooth integration of work.
@@ -13,36 +44,10 @@ This template sets up an Orchestrator agent (a Claude Code instance) that coordi
 - **PR-Based Assignment**: Use GitHub pull requests to assign and track work
 - **Context Preservation**: Save and organize development context from each worker
 - **Structured Workflows**: Templates and processes for consistent operations
-
-## Getting Started
-
-### 1. Use This Template
-
-Click "Use this template" to create your orchestrator repository.
-
-### 2. Clone and Start Your Orchestrator
-
-```bash
-git clone https://github.com/yourusername/your-orchestrator-repo
-cd your-orchestrator-repo
-claude  # Start Claude Code - this activates your Orchestrator
-```
-
-### 3. Work with Your Orchestrator
-
-Your Orchestrator will:
-1. Ask you about your project to understand its needs
-2. Help refine its own CLAUDE.md with project-specific context
-3. Prepare to manage workers for your project
-
-### 4. Describe Your First Task
-
-Tell your Orchestrator what you need:
-- "I need user authentication for my Express.js app"
-- "We need to refactor the frontend to use React hooks"
-- "Help me migrate from MongoDB to PostgreSQL"
-
-The Orchestrator will handle creating assignments and setting up workers.
+- **MCP Tools**: Efficient worker management through specialized tools
+- **Intelligent Research**: Orchestrator researches your tech stack and best practices before creating workers
+- **Domain Expertise**: Builds deep understanding of your project through structured research
+- **Codebase Analysis**: Can analyze existing projects to auto-generate PROJECT_SPEC.md
 
 ## How It Works
 
@@ -85,12 +90,18 @@ your-orchestrator-repo/
 │   ├── absolute_mode.txt           # Documentation writing mode
 │   ├── sharp_mode.txt              # Conversational interaction mode
 │   └── WORKER_SETUP_GUIDE.md       # Worker setup instructions
+├── mcp-server/                      # MCP server for orchestrator tools
+│   ├── src/                        # TypeScript source files
+│   ├── dist/                       # Compiled JavaScript (after build)
+│   ├── package.json                # Server dependencies
+│   └── README.md                   # MCP server documentation
 ├── ASSIGNMENT_TEMPLATE.md           # Template for PR assignments
 ├── ONBOARDING_TEMPLATE.md          # Template for worker onboarding
 ├── PR_WORKFLOW.md                  # Pull request workflow guide
 ├── REPOSITORY_HYGIENE.md           # Repository cleanliness guide
 ├── TEMPLATE_SETUP.md               # Setup guide for new users
 ├── template_README.md              # Template for project README
+├── mcp-config.json                 # MCP configuration file
 ├── CLAUDE.md                       # Orchestrator configuration
 └── README.md                       # This file
 ```
@@ -119,8 +130,42 @@ Detailed guide on the pull request-based workflow for coordination.
 - Git installed and configured
 - GitHub CLI (`gh`) installed and authenticated
 - Access to Claude Code
+- Node.js (for MCP server)
 
-## Example Setup
+## MCP Server Setup (Recommended)
+
+The Orchestrator includes an MCP server that provides efficient tools for managing workers. This is the recommended way to use the Orchestrator.
+
+### Quick Setup
+
+1. **Install MCP server dependencies:**
+```bash
+cd mcp-server
+npm install
+npm run build
+cd ..
+```
+
+2. **Start Claude Code with MCP tools:**
+```bash
+claude --mcp-config mcp-config.json
+```
+
+### Available MCP Tools
+
+When using the MCP configuration, I have access to these specialized tools:
+
+- **`mcp__orchestrator__create_worker`** - Creates worker workspace and clones project
+- **`mcp__orchestrator__setup_branch`** - Creates and checks out feature branches
+- **`mcp__orchestrator__copy_templates`** - Copies templates to worker projects
+- **`mcp__orchestrator__create_private_branch`** - Sets up private branches for CLAUDE.md
+- **`mcp__orchestrator__backup_claudemd`** - Backs up worker knowledge to private branches
+
+These tools handle complex operations atomically with better error handling than manual commands.
+
+## Manual Setup (Alternative)
+
+If you prefer not to use the MCP server, you can set up workers manually:
 
 ```bash
 # Clone orchestrator repo
