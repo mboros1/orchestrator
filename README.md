@@ -85,12 +85,18 @@ your-orchestrator-repo/
 │   ├── absolute_mode.txt           # Documentation writing mode
 │   ├── sharp_mode.txt              # Conversational interaction mode
 │   └── WORKER_SETUP_GUIDE.md       # Worker setup instructions
+├── mcp-server/                      # MCP server for orchestrator tools
+│   ├── src/                        # TypeScript source files
+│   ├── dist/                       # Compiled JavaScript (after build)
+│   ├── package.json                # Server dependencies
+│   └── README.md                   # MCP server documentation
 ├── ASSIGNMENT_TEMPLATE.md           # Template for PR assignments
 ├── ONBOARDING_TEMPLATE.md          # Template for worker onboarding
 ├── PR_WORKFLOW.md                  # Pull request workflow guide
 ├── REPOSITORY_HYGIENE.md           # Repository cleanliness guide
 ├── TEMPLATE_SETUP.md               # Setup guide for new users
 ├── template_README.md              # Template for project README
+├── mcp-config.json                 # MCP configuration file
 ├── CLAUDE.md                       # Orchestrator configuration
 └── README.md                       # This file
 ```
@@ -119,8 +125,42 @@ Detailed guide on the pull request-based workflow for coordination.
 - Git installed and configured
 - GitHub CLI (`gh`) installed and authenticated
 - Access to Claude Code
+- Node.js (for MCP server)
 
-## Example Setup
+## MCP Server Setup (Recommended)
+
+The Orchestrator includes an MCP server that provides efficient tools for managing workers. This is the recommended way to use the Orchestrator.
+
+### Quick Setup
+
+1. **Install MCP server dependencies:**
+```bash
+cd mcp-server
+npm install
+npm run build
+cd ..
+```
+
+2. **Start Claude Code with MCP tools:**
+```bash
+claude --mcp-config mcp-config.json
+```
+
+### Available MCP Tools
+
+When using the MCP configuration, I have access to these specialized tools:
+
+- **`mcp__orchestrator__create_worker`** - Creates worker workspace and clones project
+- **`mcp__orchestrator__setup_branch`** - Creates and checks out feature branches
+- **`mcp__orchestrator__copy_templates`** - Copies templates to worker projects
+- **`mcp__orchestrator__create_private_branch`** - Sets up private branches for CLAUDE.md
+- **`mcp__orchestrator__backup_claudemd`** - Backs up worker knowledge to private branches
+
+These tools handle complex operations atomically with better error handling than manual commands.
+
+## Manual Setup (Alternative)
+
+If you prefer not to use the MCP server, you can set up workers manually:
 
 ```bash
 # Clone orchestrator repo
