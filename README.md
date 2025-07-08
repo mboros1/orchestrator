@@ -15,17 +15,20 @@ cd your-orchestrator-repo
 cd mcp-server && npm install && npm run build && cd ..
 ```
 
-### 3. Launch your Orchestrator:
+### 3. (Optional) Create PROJECT_SPEC.md:
+Fill out `PROJECT_SPEC.md` with your project details for faster setup, or let the Orchestrator gather this information interactively.
+
+### 4. Launch your Orchestrator:
 ```bash
 claude --mcp-config mcp-config.json
 ```
 
-### 4. Start with this message:
+### 5. Start with this message:
 ```
 Hello! Please read your ONBOARDING.md to get started
 ```
 
-That's it! Your Orchestrator will read its instructions and be ready to manage your project.
+That's it! Your Orchestrator will read its instructions, research your tech stack, and be ready to manage your project intelligently.
 
 ## Overview
 
@@ -39,6 +42,8 @@ This template sets up an Orchestrator agent (a Claude Code instance) that coordi
 - **Context Preservation**: Save and organize development context from each worker
 - **Structured Workflows**: Templates and processes for consistent operations
 - **MCP Tools**: Efficient worker management through specialized tools
+- **Intelligent Research**: Orchestrator researches your tech stack and best practices before creating workers
+- **Domain Expertise**: Builds deep understanding of your project through structured research
 
 ## How It Works
 
