@@ -184,6 +184,24 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
           required: ["workerPath", "privateBranch"],
         },
       },
+      {
+        name: "activate_sharp_mode",
+        description: "CRITICAL: Activate Sharp Mode by reading assistant/sharp_mode.txt. USE THIS: At conversation start, every 10-15 messages, after breaks, when writing becomes cushioned/apologetic, before critical analysis.",
+        inputSchema: {
+          type: "object",
+          properties: {},
+          required: [],
+        },
+      },
+      {
+        name: "activate_absolute_mode",
+        description: "Activate Absolute Mode for documentation writing. USE THIS: ONLY when writing *.md files, README files, or other documentation. Switch back to Sharp Mode immediately after documentation task.",
+        inputSchema: {
+          type: "object",
+          properties: {},
+          required: [],
+        },
+      },
     ],
   };
 });
@@ -425,6 +443,54 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
             },
           ],
         };
+      }
+
+      case "activate_sharp_mode": {
+        const sharpModePath = path.join(process.cwd(), "assistant", "sharp_mode.txt");
+        try {
+          const content = await fs.readFile(sharpModePath, 'utf-8');
+          return {
+            content: [
+              {
+                type: "text",
+                text: `Sharp Mode Activated. Instructions loaded:\n\n${content}\n\nMaintain this mode for all subsequent interactions.`,
+              },
+            ],
+          };
+        } catch (error: any) {
+          return {
+            content: [
+              {
+                type: "text",
+                text: `❌ Failed to activate Sharp Mode: ${error.message}`,
+              },
+            ],
+          };
+        }
+      }
+
+      case "activate_absolute_mode": {
+        const absoluteModePath = path.join(process.cwd(), "assistant", "absolute_mode.txt");
+        try {
+          const content = await fs.readFile(absoluteModePath, 'utf-8');
+          return {
+            content: [
+              {
+                type: "text",
+                text: `Absolute Mode Activated for documentation writing.\n\n${content}\n\nREMEMBER: Return to Sharp Mode after completing documentation.`,
+              },
+            ],
+          };
+        } catch (error: any) {
+          return {
+            content: [
+              {
+                type: "text",
+                text: `❌ Failed to activate Absolute Mode: ${error.message}`,
+              },
+            ],
+          };
+        }
       }
 
       default:
