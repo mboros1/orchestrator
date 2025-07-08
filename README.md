@@ -16,7 +16,10 @@ cd mcp-server && npm install && npm run build && cd ..
 ```
 
 ### 3. (Optional) Create PROJECT_SPEC.md:
-Fill out `PROJECT_SPEC.md` with your project details for faster setup, or let the Orchestrator gather this information interactively.
+Choose one:
+- Fill out `PROJECT_SPEC.md` manually with your project details
+- Use `GENERATE_PROJECT_SPEC_PROMPT.md` to analyze existing code
+- Ask the Orchestrator to analyze your repository directly
 
 ### 4. Launch your Orchestrator:
 ```bash
@@ -44,6 +47,7 @@ This template sets up an Orchestrator agent (a Claude Code instance) that coordi
 - **MCP Tools**: Efficient worker management through specialized tools
 - **Intelligent Research**: Orchestrator researches your tech stack and best practices before creating workers
 - **Domain Expertise**: Builds deep understanding of your project through structured research
+- **Codebase Analysis**: Can analyze existing projects to auto-generate PROJECT_SPEC.md
 
 ## How It Works
 

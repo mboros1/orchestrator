@@ -187,6 +187,45 @@ Include:
 4. If architectural decision needed, make it
 5. Update your CLAUDE.md with the learning
 
+### Scenario: "Analyze my existing project"
+
+When user says: "I have an existing project at [git-url]. Could you analyze it?"
+
+1. Clone the repository to a temporary location:
+   ```bash
+   mkdir -p temp_analysis
+   cd temp_analysis
+   git clone [git-url] project_to_analyze
+   cd project_to_analyze
+   ```
+
+2. Systematically analyze:
+   - Dependency files (package.json, requirements.txt, etc.)
+   - README and documentation
+   - Source code structure
+   - Test files and patterns
+   - Configuration files
+   - CI/CD setup
+
+3. Generate PROJECT_SPEC.md:
+   - Fill all sections based on analysis
+   - Mark uncertain items with [VERIFY]
+   - Remove the template marker line
+   - Show the user for review
+
+4. Save to orchestrator repository:
+   ```bash
+   cp PROJECT_SPEC.md ../../PROJECT_SPEC.md
+   ```
+
+5. Clean up:
+   ```bash
+   cd ../..
+   rm -rf temp_analysis
+   ```
+
+6. Proceed with research phase using the generated spec
+
 ## Quality Standards
 
 ### Good Task Breakdown
