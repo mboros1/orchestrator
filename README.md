@@ -2,6 +2,31 @@
 
 A GitHub template repository that creates an AI Orchestrator - a Claude Code instance that manages multiple AI workers on your software development project.
 
+## 🚀 Quick Start
+
+### 1. Clone your orchestrator repository:
+```bash
+git clone https://github.com/yourusername/your-orchestrator-repo
+cd your-orchestrator-repo
+```
+
+### 2. Set up the MCP server:
+```bash
+cd mcp-server && npm install && npm run build && cd ..
+```
+
+### 3. Launch your Orchestrator:
+```bash
+claude --mcp-config mcp-config.json
+```
+
+### 4. Start with this message:
+```
+Hello! Please read your ONBOARDING.md to get started
+```
+
+That's it! Your Orchestrator will read its instructions and be ready to manage your project.
+
 ## Overview
 
 This template sets up an Orchestrator agent (a Claude Code instance) that coordinates parallel development by managing other Claude Code instances (workers). The Orchestrator works with you to understand your project needs, creates assignments, and ensures smooth integration of work.
@@ -13,36 +38,7 @@ This template sets up an Orchestrator agent (a Claude Code instance) that coordi
 - **PR-Based Assignment**: Use GitHub pull requests to assign and track work
 - **Context Preservation**: Save and organize development context from each worker
 - **Structured Workflows**: Templates and processes for consistent operations
-
-## Getting Started
-
-### 1. Use This Template
-
-Click "Use this template" to create your orchestrator repository.
-
-### 2. Clone and Start Your Orchestrator
-
-```bash
-git clone https://github.com/yourusername/your-orchestrator-repo
-cd your-orchestrator-repo
-claude  # Start Claude Code - this activates your Orchestrator
-```
-
-### 3. Work with Your Orchestrator
-
-Your Orchestrator will:
-1. Ask you about your project to understand its needs
-2. Help refine its own CLAUDE.md with project-specific context
-3. Prepare to manage workers for your project
-
-### 4. Describe Your First Task
-
-Tell your Orchestrator what you need:
-- "I need user authentication for my Express.js app"
-- "We need to refactor the frontend to use React hooks"
-- "Help me migrate from MongoDB to PostgreSQL"
-
-The Orchestrator will handle creating assignments and setting up workers.
+- **MCP Tools**: Efficient worker management through specialized tools
 
 ## How It Works
 

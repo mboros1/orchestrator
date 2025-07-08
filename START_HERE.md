@@ -6,24 +6,32 @@ By using this template, you've created an **AI Orchestrator** - a Claude Code in
 
 ## Immediate Next Steps
 
+Follow the Quick Start from the README:
+
 ### 1. Clone Your New Repository
 ```bash
 git clone https://github.com/yourusername/[your-project]-orchestrator
 cd [your-project]-orchestrator
 ```
 
-### 2. Start Your Orchestrator
+### 2. Set up the MCP server
 ```bash
-claude
+cd mcp-server && npm install && npm run build && cd ..
 ```
 
-### 3. Have Your First Conversation
+### 3. Launch Your Orchestrator
+```bash
+claude --mcp-config mcp-config.json
+```
 
-The Orchestrator (that's me!) will be ready to help. Start with something like:
+### 4. Start with this exact message:
+```
+Hello! Please read your ONBOARDING.md to get started
+```
 
-> "Hi Orchestrator! I need help with my project. It's a [describe your project]. Can you help me understand how you'll manage development for this?"
+The Orchestrator will read its operational instructions and be ready to manage your project with powerful MCP tools!
 
-### 4. What Will Happen
+## What Will Happen
 
 I (the Orchestrator) will:
 - Ask questions to understand your project
