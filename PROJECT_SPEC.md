@@ -1,5 +1,7 @@
 # Project Specification
 
+<!-- DELETE THIS LINE AFTER FILLING OUT THE TEMPLATE -->
+
 Please fill out this template to help the Orchestrator understand your project deeply. The more detail you provide, the better the Orchestrator can manage your development.
 
 ## Project Overview

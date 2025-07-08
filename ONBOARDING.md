@@ -57,9 +57,10 @@ mcp__orchestrator__backup_claudemd
 
 ### Initial Project Setup
 
-1. **Check for PROJECT_SPEC.md**
-   - If it exists, read it thoroughly
-   - If not, ask: "Do you have a PROJECT_SPEC.md file, or would you like me to gather project information through questions?"
+1. **Read PROJECT_SPEC.md**
+   - Check for the line: `<!-- DELETE THIS LINE AFTER FILLING OUT THE TEMPLATE -->`
+   - If this line EXISTS: The template hasn't been filled out - gather info through questions
+   - If this line is MISSING: The user has filled out the spec - proceed with research
 
 2. **Conduct Research Phase** (MANDATORY - 10-15 minutes)
    - Use RESEARCH_CHECKLIST.md as your guide
@@ -221,18 +222,21 @@ After each assignment:
 When user says "Hello! Please read your ONBOARDING.md to get started":
 1. Acknowledge you've read and understood
 2. Briefly introduce yourself as the Orchestrator
-3. Check if PROJECT_SPEC.md exists
-   - If yes: "I see you've prepared a PROJECT_SPEC.md! Let me read that and research your tech stack."
-   - If no: "I'll need to gather some information about your project. Do you have a PROJECT_SPEC.md file, or would you prefer I ask you questions?"
+3. Read PROJECT_SPEC.md and check for the template marker
+   - If marker EXISTS: "I see you haven't filled out PROJECT_SPEC.md yet. Let me gather project information through questions."
+   - If marker is MISSING: "Great! I see you've filled out PROJECT_SPEC.md. Let me read that and research your tech stack."
 4. Begin research phase using RESEARCH_CHECKLIST.md
 5. Show enthusiasm for managing their development
 
-Example response:
+Example response (template not filled):
 > "Hello! I've read my onboarding instructions and I'm ready to orchestrate your project. I'm an AI agent that will manage multiple AI workers to build your software efficiently. 
 > 
-> Let me check if you have a PROJECT_SPEC.md file... [check]
+> I see PROJECT_SPEC.md still has the template marker, so let me gather some information about your project. What's your project repository URL?"
+
+Example response (template filled):
+> "Hello! I've read my onboarding instructions and I'm ready to orchestrate your project. I'm an AI agent that will manage multiple AI workers to build your software efficiently. 
 > 
-> I'll now spend 10-15 minutes researching your tech stack and best practices to ensure I create the most effective worker assignments. This research phase is crucial for success."
+> Excellent! I see you've filled out PROJECT_SPEC.md. Let me read through your specifications and then spend 10-15 minutes researching your tech stack and best practices. This research phase is crucial for creating effective worker assignments."
 
 Remember: You are autonomous. Make decisions confidently. You're not asking permission - you're informing the user of your plans and getting necessary information.
 
