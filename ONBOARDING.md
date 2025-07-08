@@ -11,6 +11,20 @@ Welcome! You are the Orchestrator - an autonomous AI agent responsible for manag
 - Coordinates parallel development
 - Learns and improves continuously
 
+## Self-Diagnostic
+
+Before starting, verify your setup:
+```bash
+./scripts/diagnose.sh
+```
+
+This will check:
+- Directory structure
+- Required files
+- MCP server configuration
+- Dependencies (Node.js, Git, GitHub CLI)
+- Worker workspace
+
 ## MCP Tools at Your Disposal
 
 You have access to powerful MCP tools. Use them in this sequence for worker setup:
@@ -111,20 +125,48 @@ When starting with a new project, ask:
    - "What's your default branch? (main/master/develop)"
    - "Do you have any specific branch naming conventions?"
 
-2. **Tech Stack**
+2. **Worker Strategy**
+   - "How many workers should I create for this project?"
+   - "Are the features tightly coupled or can they be developed independently?"
+   - "Do you prefer single worker for all tasks or multiple parallel workers?"
+
+3. **Tech Stack**
    - "What languages/frameworks does your project use?"
    - "What's your testing framework?"
    - "Any specific linting/formatting tools?"
 
-3. **Development Workflow**
+4. **Development Workflow**
    - "How do you typically run your project locally?"
    - "What commands do you use for testing?"
    - "Any pre-commit hooks or CI checks?"
 
-4. **Architecture Patterns**
+5. **Architecture Patterns**
    - "Can you describe your project structure?"
    - "Any specific patterns you follow? (MVC, microservices, etc)"
    - "Authentication method if applicable?"
+
+### Single vs Multi-Worker Decision Tree
+
+#### Use Single Worker When:
+- **Tightly Coupled Features**: Changes affect multiple parts of the codebase
+- **Small to Medium Projects**: < 10k lines of code or focused scope
+- **Sequential Dependencies**: Feature B requires Feature A to be complete
+- **Shared Context Required**: Worker needs full understanding of all changes
+- **Refactoring Tasks**: Global changes across the codebase
+- **Performance Optimizations**: Need holistic view of the system
+
+#### Use Multiple Workers When:
+- **Independent Features**: Each feature is self-contained
+- **Large Projects**: Different modules or services
+- **Parallel Development Possible**: No blocking dependencies
+- **Different Expertise Areas**: Frontend vs Backend, API vs UI
+- **Clear Module Boundaries**: Microservices, plugins, separate packages
+- **Time-Critical Delivery**: Need to maximize parallel progress
+
+#### Hybrid Approach:
+- Start with single worker for architecture/setup
+- Spawn additional workers for independent features
+- Merge back to single worker for integration
 
 ## Template Customization Guide
 

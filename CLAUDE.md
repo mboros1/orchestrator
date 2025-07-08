@@ -40,6 +40,23 @@ I have access to these MCP tools for efficient operations:
 - **mcp__orchestrator__copy_templates**: Copy templates to worker projects
 - **mcp__orchestrator__create_private_branch**: Set up private branches for CLAUDE.md
 - **mcp__orchestrator__backup_claudemd**: Backup worker knowledge to private branches
+- **mcp__orchestrator__activate_sharp_mode**: Activate Sharp Mode for direct communication
+- **mcp__orchestrator__activate_absolute_mode**: Activate Absolute Mode for documentation
+
+### Critical: Communication Mode Management
+
+#### Sharp Mode (DEFAULT)
+Use `mcp__orchestrator__activate_sharp_mode` tool:
+- At the start of every conversation
+- Every 10-15 messages
+- After any break in conversation
+- When responses become cushioned or apologetic
+
+#### Absolute Mode (Documentation Only)
+Use `mcp__orchestrator__activate_absolute_mode` tool:
+- ONLY when writing *.md files
+- ONLY when creating README or documentation
+- Return to Sharp Mode immediately after
 
 ## Operational Details
 
@@ -170,15 +187,70 @@ The Orchestrator prioritizes:
 *This section will be continuously updated as I learn about your specific project:*
 
 ### Project Details
-- **Repository**: [To be filled when assigned]
-- **Tech Stack**: [To be discovered through our conversations]
-- **Architecture Patterns**: [To be learned from your codebase]
-- **Team Preferences**: [To be understood through interactions]
+- **Repository**: https://github.com/mboros1/string_manip.git
+- **Tech Stack**: C with SIMD optimizations via SIMDE library
+- **Architecture Patterns**: Two-pointer string representation (start/end), header/implementation pairs
+- **Team Preferences**: Maximum performance, no stdlib dependencies, trunk-based development
 
 ### Accumulated Wisdom
-- **Common Tasks**: [Patterns I've learned work well for your project]
-- **Worker Specializations**: [Which workers excel at what]
-- **Integration Patterns**: [How to best merge work in your codebase]
+- **Common Tasks**: Implementing SIMD-optimized string functions following faf_string patterns
+- **Worker Specializations**: Single worker handling all string manipulation implementations
+- **Integration Patterns**: Each function gets its own .c/.h pair, comprehensive tests using faf_test framework
+
+### MCP Tool Fixes Implemented (PR #7)
+
+Successfully fixed MCP reliability issues:
+1. **Spawn error**: Replaced exec with spawn, added proper PATH handling
+2. **Repository structure**: Fixed to clone into subdirectories (worker_X/project_name/)
+3. **Error handling**: Added validation, fallback commands, and helpful error messages
+4. **Auto-setup**: CLAUDE.md creation and git exclusions now automatic
+5. **Cross-platform**: Fixed date command and other platform-specific issues
+
+**Testing Status**: Built successfully, need Claude Code restart to load new MCP server version
+
+### Research Insights from string_manip Project
+
+#### SIMD String Manipulation Best Practices
+- **Memory Alignment**: Process unaligned data until reaching 16-byte boundaries
+- **Batch Processing**: SSE2 processes 16 bytes, AVX2 processes 32 bytes at once
+- **Branchless Design**: Use masking and blending to avoid conditional branches
+- **Architecture Fallbacks**: SIMDE handles cross-platform compatibility automatically
+
+#### Implementation Patterns Discovered
+1. **ToUpper/ToLower**: Use vector comparisons for range checking (A-Z/a-z) with masking
+   - Performance: ~8-9x speedup over scalar code
+   - Key: Compare against boundaries, mask results, add/subtract difference
+
+2. **String Trimming**: Process 16 bytes at once, create whitespace mask
+   - Daniel Lemire's despacer achieves ~14x speedup
+   - Use shuffle operations to compact non-whitespace characters
+
+3. **String Reverse**: 
+   - SSE3: Use `_mm_shuffle_epi8` with reverse index mask
+   - AVX2: Handle 128-bit lane boundaries with permute operations
+
+4. **String Contains**: Hybrid Two-Way algorithm with SIMD
+   - 2.7-6x speedup over naive approaches
+   - Process multiple comparisons in parallel
+
+5. **String Hash**: Use SIMD for parallel multiplication/XOR operations
+   - Process multiple bytes simultaneously for hash computation
+
+6. **PDQSort Integration**: Pattern-defeating quicksort for string arrays
+   - O(n log n) worst case, O(n) for sorted data
+   - Branchless comparisons reduce mispredictions
+
+#### Performance Optimization Guidelines
+- SIMD overhead not worth it for strings <16 bytes
+- Memory bandwidth often limits gains - measure carefully
+- Start with SSE2 (universal x86-64 support), add AVX2 paths where beneficial
+- Handle edge cases: page boundaries, alignment, remaining bytes
+
+#### Testing Strategy
+- Test all alignment cases (0-15 byte offsets)
+- Test string lengths from 0 to >64 bytes
+- Test edge cases: empty strings, single char, page boundaries
+- Use faf_test framework's assertion macros consistently
 
 ## Template Repository License
 
