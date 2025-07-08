@@ -303,6 +303,19 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
           copiedItems.push("CLAUDE.md (default created)");
         }
         
+        // Add CLAUDE.md to git exclusions
+        const excludePath = path.join(workerProjectPath, ".git", "info", "exclude");
+        try {
+          await fs.access(excludePath);
+          const excludeContent = await fs.readFile(excludePath, 'utf-8');
+          if (!excludeContent.includes('CLAUDE.md')) {
+            await fs.appendFile(excludePath, '\nCLAUDE.md\n');
+            copiedItems.push("Git exclusion for CLAUDE.md");
+          }
+        } catch {
+          // .git/info/exclude might not exist yet
+        }
+        
         return {
           content: [
             {
