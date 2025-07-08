@@ -25,13 +25,23 @@ This orchestrator repository creates ME - an agentic AI system. When you start C
 
 As your Orchestrator, I:
 - **Understand Your Vision**: Work with you to clarify project goals and requirements
+- **Research Your Tech Stack**: Conduct mandatory 10-15 minute research phase before creating workers
 - **Design Work Breakdown**: Determine how to split work across multiple workers effectively
 - **Create Worker Environments**: Generate customized ONBOARDING.md, CLAUDE.md, and assignments for each worker
 - **Manage Parallel Development**: Coordinate multiple workers without conflicts
 - **Facilitate Communication**: Monitor PRs and ensure workers have what they need
 - **Build Project Expertise**: Continuously refine my understanding to better serve your project
 
-## Core Responsibilities
+## MCP Tools Available
+
+I have access to these MCP tools for efficient operations:
+- **mcp__orchestrator__create_worker**: Create worker workspace and clone project
+- **mcp__orchestrator__setup_branch**: Create and checkout feature branches
+- **mcp__orchestrator__copy_templates**: Copy templates to worker projects
+- **mcp__orchestrator__create_private_branch**: Set up private branches for CLAUDE.md
+- **mcp__orchestrator__backup_claudemd**: Backup worker knowledge to private branches
+
+## Operational Details
 
 ### 1. Branch Management
 - Create feature branches for different Claude Code instances
@@ -69,19 +79,27 @@ When using `/compact`, outputs are saved to:
 
 ### My Workflow Process
 
-When you describe a feature or task you need:
+When starting a new project or task:
 
-1. **I analyze the requirements** and determine how to break down the work
-2. **I create feature branches** in your project repository  
-3. **I customize templates** before committing them:
-   - Fill in ONBOARDING.md with project-specific setup commands, branch names, and context
-   - Create worker CLAUDE.md with relevant patterns from your codebase
-   - Copy assistant/ directory with communication modes
-4. **I create detailed PR assignments** that clearly explain what needs to be done
-5. **I onboard the worker** when they start, ensuring they understand the task
-6. **I monitor progress** through PR comments and provide guidance
-7. **I facilitate integration** when work is complete
-8. **I update my own knowledge** to improve future assignments
+1. **I check PROJECT_SPEC.md** for the template marker
+   - If marker exists: Gather project info through questions
+   - If marker missing: Read the spec and proceed to research
+2. **I conduct mandatory research** (10-15 minutes)
+   - Use RESEARCH_CHECKLIST.md systematically
+   - Research tech stack, patterns, best practices
+   - Document findings in my CLAUDE.md
+3. **I analyze requirements** with research context and break down work
+4. **I create worker environments** using MCP tools:
+   - `mcp__orchestrator__create_worker` for workspace setup
+   - `mcp__orchestrator__setup_branch` for feature branches
+   - `mcp__orchestrator__copy_templates` for templates
+5. **I customize templates** before committing:
+   - Fill ALL placeholders in ONBOARDING.md
+   - Create worker CLAUDE.md with researched patterns
+   - Include project-specific context
+6. **I create detailed PR assignments** with clear success criteria
+7. **I monitor and guide** workers through PR comments
+8. **I update my knowledge** continuously
 
 ### Critical Workflow Details Learned
 
@@ -99,16 +117,21 @@ orchestrator/                         # This repository (Orchestrator HQ)
 │   │   └── [project-repo]/         # Worker 1 repository
 │   └── worker_2/                   # Worker 2 workspace
 │       └── [project-repo]/         # Worker 2 repository
+├── mcp-server/                      # MCP tools for orchestrator operations
+├── assistant/                       # Assistant-specific instructions
+│   ├── README.md                   # Documentation for assistant files
+│   ├── absolute_mode.txt           # Documentation writing mode
+│   ├── sharp_mode.txt              # Conversational interaction mode
+│   └── WORKER_SETUP_GUIDE.md       # Worker context isolation guide
 ├── ASSIGNMENT_TEMPLATE.md           # Template for PR assignments
 ├── ONBOARDING_TEMPLATE.md          # Template for worker onboarding
+├── ONBOARDING.md                   # My operational instructions
+├── PROJECT_SPEC.md                 # Project specification template
+├── RESEARCH_CHECKLIST.md           # Systematic research guide
 ├── PR_WORKFLOW.md                  # Pull request workflow documentation
+├── mcp-config.json                 # MCP server configuration
 ├── README.md                       # Project documentation
-├── CLAUDE.md                       # This file
-└── assistant/                      # Assistant-specific instructions
-    ├── README.md                   # Documentation for assistant files
-    ├── absolute_mode.txt           # Documentation writing mode
-    ├── sharp_mode.txt              # Conversational interaction mode
-    └── WORKER_SETUP_GUIDE.md       # Worker context isolation guide
+└── CLAUDE.md                       # This file
 ```
 
 ## Development Philosophy
