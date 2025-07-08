@@ -10,6 +10,8 @@ import { promises as fs } from "fs";
 import { spawn } from "child_process";
 import path from "path";
 import { fileURLToPath } from "url";
+import { validateTemplates, formatValidationResults } from "./validate_templates.js";
+import { fillWorkerTemplates, createStandardReplacements } from "./fill_template.js";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // Tool schemas
@@ -39,6 +41,29 @@ const CreatePrivateBranchSchema = z.object({
 const BackupClaudemdSchema = z.object({
   workerPath: z.string().describe("Path to worker's project directory"),
   privateBranch: z.string().describe("Private branch name"),
+});
+
+const ValidateTemplatesSchema = z.object({
+  workerPath: z.string().describe("Path to worker's project directory"),
+});
+
+const FillTemplatesSchema = z.object({
+  workerPath: z.string().describe("Path to worker's project directory"),
+  projectInfo: z.object({
+    branchName: z.string(),
+    workerName: z.string(),
+    repoUrl: z.string(),
+    featureName: z.string(),
+    projectName: z.string(),
+    prUrl: z.string().optional(),
+    buildCommands: z.string().optional(),
+    prNumber: z.string().optional(),
+    priority: z.string().optional(),
+  }).describe("Project information for replacements"),
+  customSections: z.record(z.string(), z.object({
+    replacements: z.record(z.string(), z.string()).optional(),
+    appendSections: z.record(z.string(), z.string()).optional(),
+  })).optional().describe("Template-specific customizations"),
 });
 
 // Create MCP server
@@ -182,6 +207,55 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
             privateBranch: { type: "string", description: "Private branch name" },
           },
           required: ["workerPath", "privateBranch"],
+        },
+      },
+      {
+        name: "validate_templates",
+        description: "Validate template files for remaining orchestrator placeholders. Run after copying templates to check for unfilled placeholders.",
+        inputSchema: {
+          type: "object",
+          properties: {
+            workerPath: { type: "string", description: "Path to worker's project directory" },
+          },
+          required: ["workerPath"],
+        },
+      },
+      {
+        name: "fill_templates",
+        description: "Fill template placeholders with project-specific values and add custom sections",
+        inputSchema: {
+          type: "object",
+          properties: {
+            workerPath: { type: "string", description: "Path to worker's project directory" },
+            projectInfo: { 
+              type: "object",
+              description: "Project information for replacements",
+              properties: {
+                branchName: { type: "string" },
+                workerName: { type: "string" },
+                repoUrl: { type: "string" },
+                featureName: { type: "string" },
+                projectName: { type: "string" },
+                prUrl: { type: "string" },
+                buildCommands: { type: "string" },
+                prNumber: { type: "string" },
+                priority: { type: "string" },
+              },
+              required: ["branchName", "workerName", "repoUrl", "featureName", "projectName"],
+            },
+            customSections: {
+              type: "object",
+              description: "Template-specific customizations",
+              additionalProperties: {
+                type: "object",
+                properties: {
+                  replacements: { type: "object", additionalProperties: { type: "string" } },
+                  appendSections: { type: "object", additionalProperties: { type: "string" } },
+                },
+              },
+            },
+          },
+          required: ["workerPath", "projectInfo"],
         },
       },
       {
@@ -443,6 +517,73 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
             },
           ],
         };
+      }
+
+      case "validate_templates": {
+        const { workerPath } = ValidateTemplatesSchema.parse(args);
+        
+        try {
+          const results = await validateTemplates(workerPath);
+          const formatted = formatValidationResults(results);
+          
+          return {
+            content: [
+              {
+                type: "text",
+                text: formatted,
+              },
+            ],
+          };
+        } catch (error: any) {
+          return {
+            content: [
+              {
+                type: "text",
+                text: `❌ Error validating templates: ${error.message}`,
+              },
+            ],
+          };
+        }
+      }
+
+      case "fill_templates": {
+        const { workerPath, projectInfo, customSections } = FillTemplatesSchema.parse(args);
+        
+        try {
+          // Create standard replacements
+          const commonReplacements = createStandardReplacements(projectInfo);
+          
+          // Fill all templates
+          const results = await fillWorkerTemplates(workerPath, commonReplacements, customSections || {});
+          
+          // Format results
+          let output = [`${results.success ? '✅' : '❌'} ${results.summary}\n`];
+          
+          for (const [template, result] of Object.entries(results.templates)) {
+            output.push(`📄 ${template}: ${result.message}`);
+            if (result.warnings.length > 0) {
+              result.warnings.forEach(w => output.push(`   ⚠️  ${w}`));
+            }
+          }
+          
+          return {
+            content: [
+              {
+                type: "text",
+                text: output.join('\n'),
+              },
+            ],
+          };
+        } catch (error: any) {
+          return {
+            content: [
+              {
+                type: "text",
+                text: `❌ Error filling templates: ${error.message}`,
+              },
+            ],
+          };
+        }
       }
 
       case "activate_sharp_mode": {

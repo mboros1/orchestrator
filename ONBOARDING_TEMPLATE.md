@@ -5,27 +5,21 @@ Welcome to your project workspace! This guide will help you get started with you
 ## Your Workspace
 
 - **Working Directory**: THIS directory - always start Claude Code here!
-- **Branch**: `[branch-name]`
-- **Remote**: `[repository-url]`
+- **Branch**: `__ORCH_BRANCH_NAME__`
+- **Remote**: `__ORCH_REPO_URL__`
 
 ⚠️ **Critical**: See `assistant/WORKER_SETUP_GUIDE.md` (in this directory) for detailed setup instructions to ensure proper context isolation.
 
 ## Getting Started
 
 ### Step 1: Review Your Assignment
-Your assignment is in the PR description at: [PR URL]
+Your assignment is in the PR description at: __ORCH_PR_URL__
 
 ### Step 2: Set Up Your Environment
 ```bash
-# Install dependencies (example - adjust for your project)
-npm install
-
-# Run development mode
-npm start
-
-# Run tests
-npm test
+__ORCH_BUILD_COMMANDS__
 ```
+<!-- ORCHESTRATOR:APPEND:after_setup -->
 
 ### Step 3: Customize Your CLAUDE.md and Create Private Branch
 You've been provided a starter CLAUDE.md. This is your knowledge base that will grow with each assignment:
@@ -34,13 +28,13 @@ You've been provided a starter CLAUDE.md. This is your knowledge base that will 
 2. Create your private branch to preserve your growing expertise:
    ```bash
    # Create a private branch for your workspace
-   git checkout -b private/[your-name]/[feature-name]
+   git checkout -b __ORCH_PRIVATE_BRANCH__
    git add CLAUDE.md
-   git commit -m "Initial workspace for [feature-name]"
-   git push -u origin private/[your-name]/[feature-name]
+   git commit -m "Initial workspace for __ORCH_BRANCH_NAME__"
+   git push -u origin __ORCH_PRIVATE_BRANCH__
    
    # Return to feature branch to continue work
-   git checkout feature/[branch-name]
+   git checkout __ORCH_BRANCH_NAME__
    ```
 3. Add CLAUDE.md to git exclusions:
    ```bash
@@ -57,13 +51,14 @@ As you discover patterns, solve problems, or learn about the codebase:
 ```bash
 # Quick backup (from feature branch)
 git stash push -m "temp" -- CLAUDE.md
-git checkout private/[your-name]/[feature-name]
+git checkout __ORCH_PRIVATE_BRANCH__
 git stash pop
 git commit -am "Update: [what you learned]"
 git push
-git checkout feature/[branch-name]
+git checkout __ORCH_BRANCH_NAME__
 ```
 
+<!-- ORCHESTRATOR:APPEND:before_communication_protocol -->
 ## Communication Protocol
 
 ### PR Comments
@@ -113,6 +108,7 @@ Ready to merge!
 3. Ask questions early - don't stay blocked
 4. Commit with clear, descriptive messages
 5. Save context using `/compact` regularly
+<!-- ORCHESTRATOR:APPEND:after_development_workflow -->
 
 ### Before Marking Complete
 - [ ] All acceptance criteria met

@@ -1,101 +1,110 @@
 # Project Specification
 
-<!-- DELETE THIS LINE AFTER FILLING OUT THE TEMPLATE -->
-
-Please fill out this template to help the Orchestrator understand your project deeply. The more detail you provide, the better the Orchestrator can manage your development.
-
 ## Project Overview
 
-**Project Name:** [Your project name]
+**Project Name:** string_manip
 
-**Description:** [2-3 sentences describing what your project does]
+**Description:** A high-performance, cross-platform string manipulation library written in C that uses SIMD operations for maximum performance. The library operates on two-pointer strings (start/end) and has no dependencies on the standard library, making it suitable for freestanding environments.
 
-**Domain:** [e.g., E-commerce, SaaS, Healthcare, Finance, Social Media]
+**Domain:** Systems Programming / High-Performance Computing
 
 ## Tech Stack
 
 ### Backend
-- **Language:** [e.g., Node.js, Python, Java, Go]
-- **Framework:** [e.g., Express, FastAPI, Spring Boot]
-- **Database:** [e.g., PostgreSQL, MongoDB, MySQL]
-- **ORM/ODM:** [e.g., Prisma, TypeORM, Mongoose]
-- **Authentication:** [e.g., JWT, OAuth, Session-based]
+- **Language:** C
+- **Framework:** None (bare metal library)
+- **Database:** N/A
+- **ORM/ODM:** N/A
+- **Authentication:** N/A
 
 ### Frontend
-- **Framework:** [e.g., React, Vue, Angular, Next.js]
-- **Language:** [e.g., TypeScript, JavaScript]
-- **Styling:** [e.g., Tailwind CSS, Material-UI, styled-components]
-- **State Management:** [e.g., Redux, Zustand, Context API]
-- **Build Tool:** [e.g., Vite, Webpack, Parcel]
+- **Framework:** N/A (C library)
+- **Language:** C
+- **Styling:** N/A
+- **State Management:** N/A
+- **Build Tool:** Make
 
 ### Infrastructure
-- **Hosting:** [e.g., AWS, Vercel, Heroku, Self-hosted]
-- **CI/CD:** [e.g., GitHub Actions, CircleCI, Jenkins]
-- **Containerization:** [e.g., Docker, Kubernetes]
-- **Monitoring:** [e.g., Sentry, DataDog, New Relic]
+- **Hosting:** N/A (library)
+- **CI/CD:** GitHub Actions
+- **Containerization:** None
+- **Monitoring:** None
 
 ## Current Features
 
 List your existing features (if any):
-1. [Feature 1]
-2. [Feature 2]
-3. [Feature 3]
+1. String length calculation (faf_string_strlen)
+2. String comparison (faf_string_cmp)
+3. String concatenation (faf_string_concat)
+4. String memory operations (copy, etc.)
+5. String splitting (faf_string_strsplit)
+6. String to lowercase conversion (faf_string_to_lower)
+7. Custom testing framework (faf_test)
 
 ## Planned Features
 
 List features you want to build (in priority order):
-1. [High Priority: Feature A]
-2. [High Priority: Feature B]
-3. [Medium Priority: Feature C]
-4. [Low Priority: Feature D]
+1. [High Priority: toupper - convert strings to uppercase]
+2. [High Priority: trim functions - ltrim, rtrim, trim for whitespace removal]
+3. [High Priority: reverse - reverse string contents]
+4. [High Priority: contains - substring search]
+5. [Medium Priority: hash - string hashing function]
+6. [Medium Priority: sort - sort strings and string arrays using pdqsort]
+7. [Low Priority: format - string formatting]
+8. [Low Priority: strmult - string multiplication/repetition]
 
 ## Architecture Patterns
 
-- **API Style:** [REST / GraphQL / gRPC]
-- **Architecture:** [Monolith / Microservices / Serverless]
-- **Design Patterns:** [MVC / MVVM / Clean Architecture]
-- **Testing Strategy:** [Unit / Integration / E2E]
+- **API Style:** C Library API
+- **Architecture:** Header/Implementation file pairs
+- **Design Patterns:** Two-pointer string representation (start/end)
+- **Testing Strategy:** Custom unit testing framework (faf_test)
 
 ## Development Workflow
 
 ### Commands
-- **Install dependencies:** `[npm install / pip install -r requirements.txt]`
-- **Run development:** `[npm run dev / python manage.py runserver]`
-- **Run tests:** `[npm test / pytest]`
-- **Build production:** `[npm run build]`
-- **Lint/Format:** `[npm run lint / black .]`
+- **Install dependencies:** `brew install simde` (macOS) or appropriate package manager
+- **Run development:** `make`
+- **Run tests:** `make all_tests`
+- **Build production:** `make`
+- **Lint/Format:** None specified
 
 ### Git Workflow
-- **Default branch:** [main / master / develop]
-- **Branch naming:** [feature/*, bugfix/*, hotfix/*]
-- **Commit style:** [Conventional Commits / Descriptive]
-- **PR process:** [Required reviews / CI checks]
+- **Default branch:** trunk
+- **Branch naming:** feature/* (inferred)
+- **Commit style:** Descriptive
+- **PR process:** Standard GitHub PR workflow
 
 ## Constraints & Requirements
 
 ### Technical Constraints
-- [ ] Must support IE11
-- [ ] Must be mobile-responsive
-- [ ] Must handle 1000+ concurrent users
-- [ ] Must maintain sub-second response times
-- [ ] Other: [Specify]
+- [X] Must work without standard library
+- [X] Must support cross-platform SIMD operations
+- [X] Must work in freestanding environments
+- [X] Must maintain high performance
+- [X] Must use SIMDE for portable SIMD
 
 ### Business Constraints
 - [ ] GDPR compliance required
 - [ ] PCI compliance required
 - [ ] Must integrate with [specific system]
-- [ ] Other: [Specify]
+- [X] Other: No external dependencies except SIMDE
 
 ## Existing Documentation
 
-- **README location:** [/README.md]
-- **API docs:** [/docs/api.md or URL]
-- **Architecture docs:** [/docs/architecture.md or URL]
-- **Setup guide:** [/docs/setup.md or URL]
+- **README location:** /README.md
+- **API docs:** Header files contain inline documentation
+- **Architecture docs:** None
+- **Setup guide:** README.md contains build instructions
 
 ## Additional Context
 
-[Any other information that would help the Orchestrator understand your project better - business logic, specific conventions, team preferences, etc.]
+The library uses a unique string representation with two pointers (start and end) instead of null-terminated strings. This allows for O(1) length calculation and better SIMD optimization. All functions should follow the existing patterns:
+- Use faf_string type (union with start/end pointers and simde__m128i)
+- Implement SIMD-optimized versions where possible
+- Provide comprehensive tests using the faf_test framework
+- Follow the existing naming convention (faf_string_*)
+- Document runtime and memory complexity in header comments
 
 ---
 
