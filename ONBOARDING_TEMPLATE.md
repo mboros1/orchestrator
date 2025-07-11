@@ -21,93 +21,69 @@ __ORCH_BUILD_COMMANDS__
 ```
 <!-- ORCHESTRATOR:APPEND:after_setup -->
 
-### Step 3: Customize Your CLAUDE.md and Create Private Branch
-You've been provided a starter CLAUDE.md. This is your knowledge base that will grow with each assignment:
+### Step 3: Set Up Your CLAUDE.md
+You own the CLAUDE.md file in this repository. It's your personal knowledge base:
 
-1. Edit CLAUDE.md to add your task understanding and approach
-2. Create your private branch to preserve your growing expertise:
-   ```bash
-   # Create a private branch for your workspace
-   git checkout -b __ORCH_PRIVATE_BRANCH__
-   git add CLAUDE.md
-   git commit -m "Initial workspace for __ORCH_BRANCH_NAME__"
-   git push -u origin __ORCH_PRIVATE_BRANCH__
-   
-   # Return to feature branch to continue work
-   git checkout __ORCH_BRANCH_NAME__
-   ```
-3. Add CLAUDE.md to git exclusions:
-   ```bash
-   echo "CLAUDE.md" >> .git/info/exclude
-   ```
+1. CLAUDE.md is gitignored - it stays in your working directory
+2. Customize it with your understanding of the project and assignment
+3. Let it evolve naturally as you implement and learn
+4. No complex branch management needed - simple and effective
 
-**CRITICAL**: 
-- Never commit CLAUDE.md to the feature branch!
-- Always backup to your private branch as you learn
-- Your CLAUDE.md should grow richer with each assignment
-
-### Regular Backups
-As you discover patterns, solve problems, or learn about the codebase:
-```bash
-# Quick backup (from feature branch)
-git stash push -m "temp" -- CLAUDE.md
-git checkout __ORCH_PRIVATE_BRANCH__
-git stash pop
-git commit -am "Update: [what you learned]"
-git push
-git checkout __ORCH_BRANCH_NAME__
-```
+**CLAUDE.md Management**:
+- Single file in repository root
+- Automatically excluded from git commits  
+- Grows with your expertise on this project
+- Persistent across all your work on this repository
 
 <!-- ORCHESTRATOR:APPEND:before_communication_protocol -->
-## Communication Protocol
+## Autonomous Execution
 
-### PR Comments
-All communication happens through PR comments:
+### Your Assignment
+You have everything needed for complete autonomous execution:
 
-**Progress Updates**:
+- **Comprehensive Research**: Orchestrator spent 15+ minutes researching domain patterns
+- **Technical Context**: ONBOARDING.md contains all implementation guidance  
+- **Success Criteria**: Clear, measurable requirements in PR description
+- **Domain Expertise**: Accumulated research findings and best practices
+
+### Minimal Communication
+Operate autonomously with rare communication:
+
+**Implementation Complete**:
 ```markdown
-## Progress Update - [Date]
+## ✅ Implementation Complete
 
-✅ Completed:
-- [What you finished]
+**Delivered**:
+- [All requirements met]
+- [Performance targets achieved]  
+- [Tests passing]
 
-🔧 In Progress:
-- [What you're working on]
+**Key Decisions**:
+- [Technical choice 1]: [Rationale]
+- [Technical choice 2]: [Rationale]
 
-❓ Questions:
-- [Any blockers or questions]
+Ready for merge.
 ```
 
-**Requesting Help**:
+**Critical Blockers Only** (rare):
 ```markdown
-## Need Assistance
+## Critical Blocker
 
-**Issue**: [Description]
-**What I've Tried**: [Your attempts]
-**Context**: [Relevant information]
+**Issue**: [Fundamental requirement conflict discovered]
+**Context**: [Why this cannot be resolved autonomously]
+**Options**: [Potential paths forward]
 
-Could you provide guidance?
+Guidance needed to proceed.
 ```
 
-**Ready for Review**:
-```markdown
-## Ready for Review
+## Development Approach
 
-All tasks complete and tested. Key changes:
-- [Summary of changes]
-- [Files modified]
-
-Ready to merge!
-```
-
-## Development Workflow
-
-### Best Practices
-1. Check PR for new comments regularly
-2. Post progress updates when reaching milestones
-3. Ask questions early - don't stay blocked
-4. Commit with clear, descriptive messages
-5. Save context using `/compact` regularly
+### Self-Sufficient Execution
+1. Read ONBOARDING.md completely before starting
+2. Understand success criteria and technical requirements  
+3. Implement with full autonomy
+4. Validate against all requirements
+5. Deliver complete solution
 <!-- ORCHESTRATOR:APPEND:after_development_workflow -->
 
 ### Before Marking Complete
@@ -122,11 +98,10 @@ Ready to merge!
 
 ### DO NOT Commit
 - This ONBOARDING.md file
-- Any ASSIGNMENT.md files
+- CLAUDE.md (automatically gitignored)
 - Temporary or workflow files
 
 ### DO Commit
-- Your updated CLAUDE.md
 - All code changes
 - Documentation updates
 - Test files
@@ -145,16 +120,6 @@ This creates a snapshot in `.claude_context/` that can be restored later.
 ### Restoring Context
 If you need to resume work after a break, your context files help you quickly get back up to speed.
 
-## Knowledge Continuity
-
-### Starting Your Next Assignment
-When you receive a new assignment:
-1. Check if you have existing private branches with relevant context
-2. Copy useful patterns and knowledge from previous CLAUDE.md files
-3. Build upon your growing expertise
-
-Your private branches form your personal knowledge base for this project.
-
 ## Communication Modes
 
 You must follow these communication modes (check your local `assistant/` directory):
@@ -169,10 +134,19 @@ You must follow these communication modes (check your local `assistant/` directo
 - `assistant/sharp_mode.txt`
 - `assistant/absolute_mode.txt`
 
+## Recommended: MCP Setup
+
+Consider setting up MCP tools for enhanced functionality:
+- Vector search capabilities for codebase exploration
+- Advanced code analysis tools
+- Performance profiling utilities
+
+Check if MCP configuration is available in your repository.
+
 ## Need Help?
 
-Post a comment on your PR describing your issue. The orchestrator will respond and help unblock you.
+Only for critical blockers that prevent autonomous execution. Post a comment on your PR describing the fundamental issue.
 
 ---
 
-*Remember: Clear communication and regular updates help ensure smooth collaboration!*
+*You have everything needed for autonomous execution. Trust the research and deliver complete solutions.*

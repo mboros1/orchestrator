@@ -2,109 +2,111 @@
 
 ## Project Overview
 
-**Project Name:** string_manip
+**Project Name:** native-vector-store
 
-**Description:** A high-performance, cross-platform string manipulation library written in C that uses SIMD operations for maximum performance. The library operates on two-pointer strings (start/end) and has no dependencies on the standard library, making it suitable for freestanding environments.
+**Description:** High-performance in-memory vector store for small-scale local RAG applications. Provides fast similarity search over document embeddings with MCP server integration for TypeScript/JavaScript projects.
 
-**Domain:** Systems Programming / High-Performance Computing
+**Domain:** Information Retrieval / Machine Learning Infrastructure
 
 ## Tech Stack
 
 ### Backend
-- **Language:** C
-- **Framework:** None (bare metal library)
-- **Database:** N/A
+- **Language:** C++
+- **Framework:** Node.js N-API bindings
+- **Database:** In-memory vector storage
 - **ORM/ODM:** N/A
 - **Authentication:** N/A
 
 ### Frontend
-- **Framework:** N/A (C library)
-- **Language:** C
+- **Framework:** TypeScript/JavaScript API
+- **Language:** TypeScript
 - **Styling:** N/A
 - **State Management:** N/A
-- **Build Tool:** Make
+- **Build Tool:** node-gyp
 
 ### Infrastructure
-- **Hosting:** N/A (library)
+- **Hosting:** npm package distribution
 - **CI/CD:** GitHub Actions
 - **Containerization:** None
-- **Monitoring:** None
+- **Monitoring:** Performance benchmarks
 
 ## Current Features
 
 List your existing features (if any):
-1. String length calculation (faf_string_strlen)
-2. String comparison (faf_string_cmp)
-3. String concatenation (faf_string_concat)
-4. String memory operations (copy, etc.)
-5. String splitting (faf_string_strsplit)
-6. String to lowercase conversion (faf_string_to_lower)
-7. Custom testing framework (faf_test)
+1. C++ VectorStore class with arena allocation
+2. Document storage (id, text, metadata)
+3. Parallel JSON document loading
+4. Cosine similarity search via normalized dot product
+5. OpenMP SIMD optimization
+6. Node.js N-API wrapper
+7. TypeScript definitions
 
 ## Planned Features
 
 List features you want to build (in priority order):
-1. [High Priority: toupper - convert strings to uppercase]
-2. [High Priority: trim functions - ltrim, rtrim, trim for whitespace removal]
-3. [High Priority: reverse - reverse string contents]
-4. [High Priority: contains - substring search]
-5. [Medium Priority: hash - string hashing function]
-6. [Medium Priority: sort - sort strings and string arrays using pdqsort]
-7. [Low Priority: format - string formatting]
-8. [Low Priority: strmult - string multiplication/repetition]
+1. [High Priority: npm package build and distribution]
+2. [High Priority: comprehensive testing suite]
+3. [High Priority: MCP server integration example]
+4. [High Priority: performance benchmarking]
+5. [Medium Priority: error handling improvements]
+6. [Medium Priority: cross-platform binary distribution]
+7. [Low Priority: memory usage optimization]
+8. [Low Priority: alternative similarity metrics]
 
 ## Architecture Patterns
 
-- **API Style:** C Library API
-- **Architecture:** Header/Implementation file pairs
-- **Design Patterns:** Two-pointer string representation (start/end)
-- **Testing Strategy:** Custom unit testing framework (faf_test)
+- **API Style:** Object-oriented TypeScript API
+- **Architecture:** C++ core with Node.js bindings
+- **Design Patterns:** Arena allocation, SIMD optimization
+- **Testing Strategy:** Unit tests, integration tests, performance benchmarks
 
 ## Development Workflow
 
 ### Commands
-- **Install dependencies:** `brew install simde` (macOS) or appropriate package manager
-- **Run development:** `make`
-- **Run tests:** `make all_tests`
-- **Build production:** `make`
-- **Lint/Format:** None specified
+- **Install dependencies:** `npm install`
+- **Run development:** `npm run build`
+- **Run tests:** `npm test`
+- **Build production:** `npm run build`
+- **Lint/Format:** Standard npm tooling
 
 ### Git Workflow
-- **Default branch:** trunk
-- **Branch naming:** feature/* (inferred)
-- **Commit style:** Descriptive
-- **PR process:** Standard GitHub PR workflow
+- **Default branch:** main
+- **Branch naming:** feature/* 
+- **Commit style:** Conventional commits
+- **PR process:** GitHub PR workflow
 
 ## Constraints & Requirements
 
 ### Technical Constraints
-- [X] Must work without standard library
-- [X] Must support cross-platform SIMD operations
-- [X] Must work in freestanding environments
-- [X] Must maintain high performance
-- [X] Must use SIMDE for portable SIMD
+- [X] Must support <1M embeddings efficiently
+- [X] Must provide sub-second load times
+- [X] Must support configurable embedding dimensions
+- [X] Must integrate with MCP servers
+- [X] Must provide TypeScript definitions
 
 ### Business Constraints
 - [ ] GDPR compliance required
 - [ ] PCI compliance required
 - [ ] Must integrate with [specific system]
-- [X] Other: No external dependencies except SIMDE
+- [X] Other: Apache 2.0 license for npm distribution
 
 ## Existing Documentation
 
-- **README location:** /README.md
-- **API docs:** Header files contain inline documentation
+- **README location:** /README.md (to be created)
+- **API docs:** TypeScript definitions in index.d.ts
 - **Architecture docs:** None
-- **Setup guide:** README.md contains build instructions
+- **Setup guide:** Package.json scripts
 
 ## Additional Context
 
-The library uses a unique string representation with two pointers (start and end) instead of null-terminated strings. This allows for O(1) length calculation and better SIMD optimization. All functions should follow the existing patterns:
-- Use faf_string type (union with start/end pointers and simde__m128i)
-- Implement SIMD-optimized versions where possible
-- Provide comprehensive tests using the faf_test framework
-- Follow the existing naming convention (faf_string_*)
-- Document runtime and memory complexity in header comments
+The library targets small-scale local RAG applications where fast startup and search performance are critical. Documents are loaded from JSON files containing pre-computed embeddings. The C++ implementation uses:
+- Custom arena allocator for memory efficiency
+- OpenMP for parallel processing
+- simdjson for high-speed JSON parsing
+- SIMD optimized dot product operations
+- Thread-safe read operations
+
+Target use case: MCP servers with document knowledge bases requiring fast semantic search capabilities.
 
 ---
 

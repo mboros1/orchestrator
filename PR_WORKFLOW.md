@@ -2,12 +2,12 @@
 
 ## Overview
 
-All communication between the Orchestrator (me - a Claude Code instance) and workers (other Claude Code instances) happens through GitHub Pull Requests. This leverages GitHub's built-in notification system and provides a clear audit trail of all development activities.
+The orchestrator creates comprehensive assignments and hands off to autonomous workers. Communication during execution is minimal - workers deliver complete implementations based on thorough research and detailed onboarding documentation.
 
 ## Important: Understanding the Roles
 
-- **Orchestrator**: I am a Claude Code instance managing the project
-- **Workers**: Other Claude Code instances doing the implementation
+- **Orchestrator**: Claude Code instance performing research and creating worker assignments
+- **Workers**: Autonomous Claude Code instances delivering complete implementations
 - **You**: The human providing direction and making decisions
 
 ## Workflow Steps
@@ -62,34 +62,16 @@ Workers are notified by:
 
 After receiving assignment notification:
 1. Clone the project repository
-2. Checkout the assigned feature branch (contains ONBOARDING.md, assistant/, and starter CLAUDE.md)
-3. Customize the CLAUDE.md file for your needs (but never commit to feature branch)
-4. Create your private branch to maintain your growing expertise:
-   ```bash
-   # Create private branch from current state
-   git checkout -b private/[worker-name]/[feature-name]
-   git add CLAUDE.md
-   git commit -m "Initial workspace for [feature-name]"
-   git push -u origin private/[worker-name]/[feature-name]
-   
-   # Return to feature branch
-   git checkout feature/[assigned-branch]
-   # CLAUDE.md remains in working directory but uncommitted
-   ```
-5. Follow ONBOARDING.md instructions
-6. Start Claude Code from the project repository directory
+2. Checkout the assigned feature branch (contains ONBOARDING.md and assistant/)
+3. Read ONBOARDING.md thoroughly - it contains all context needed for autonomous execution
+4. Start Claude Code from the project repository directory
+5. Worker maintains their own CLAUDE.md in the repository root (gitignored)
 
-**Important**: Regularly backup your CLAUDE.md to your private branch as you learn:
-```bash
-# Quick backup workflow (run from feature branch)
-git stash push -m "temp" -- CLAUDE.md
-git checkout private/[worker-name]/[feature-name]
-git stash pop
-git add CLAUDE.md
-git commit -m "Update: [what you learned]"
-git push
-git checkout feature/[assigned-branch]
-```
+**Simplified Context Management**:
+- Single CLAUDE.md per repository owned by the worker
+- No complex branch management for context preservation
+- Worker accumulates expertise naturally during implementation
+- CLAUDE.md evolves with the project and worker's understanding
 
 ### 4. Template System (v1.2)
 
@@ -130,95 +112,42 @@ PR descriptions should include:
 *See ONBOARDING.md in your branch for setup instructions*
 ```
 
-## Communication Patterns
+## Autonomous Execution Model
 
-### Progress Updates
+### Minimal Communication
+Workers operate autonomously with comprehensive handoffs:
+- **Research Phase**: Orchestrator conducts 15-minute mandatory research before assignment
+- **Detailed ONBOARDING.md**: Contains all technical context and implementation guidance
+- **Self-Sufficient Execution**: Workers have everything needed for complete delivery
+- **Outcome-Focused**: Communication only for final delivery and edge cases
 
-Workers post PR comments for:
-- **Regular Updates**: Summary of progress
-- **Blockers**: Issues requiring assistance
-- **Questions**: Technical clarifications needed
-- **Discoveries**: Important findings or insights
+### When Workers Do Communicate
+Rare instances requiring human/orchestrator input:
+- **Fundamental Requirement Changes**: Discovered during implementation
+- **Critical Technical Blockers**: Cannot be resolved with available context
+- **Integration Dependencies**: Require coordination with external systems
 
-Example:
+### Final Delivery
+Workers deliver complete implementations:
 ```markdown
-## Progress Update - [Date]
+## ✅ Implementation Complete
 
-✅ Completed:
-- Implemented feature X
-- Added unit tests
-- Updated documentation
-
-🔧 In Progress:
-- Integration testing
-- Performance optimization
-
-❓ Question:
-Should we use approach A or B for handling edge case Y?
-```
-
-### Requesting Help
-
-When blocked:
-```markdown
-## 🚨 Blocked - Need Assistance
-
-**Issue**: [Description of the problem]
-**Error**: [Error message if applicable]
-**Attempted Solutions**:
-1. [What you tried first]
-2. [What you tried next]
-3. [Other attempts]
-
-**Context**: [Additional relevant information]
-
-Could you provide guidance on how to proceed?
-```
-
-### Ready for Review
-
-When work is complete:
-```markdown
-## ✅ Ready for Review
-
-**Completed**:
-- All success criteria met
-- Tests passing
+**Delivered**:
+- All assignment requirements met
+- Tests passing and documented
+- Performance targets achieved
 - Documentation updated
 
-**Key Changes**:
-- `file1.js`: [What changed and why]
-- `file2.js`: [What changed and why]
-- `docs/`: [Documentation updates]
+**Key Technical Decisions**:
+- [Decision 1]: [Rationale]
+- [Decision 2]: [Rationale]
 
-**Testing**:
-- ✅ Unit tests
-- ✅ Integration tests
-- ✅ Manual testing
+**Validation**:
+- ✅ Functional requirements
+- ✅ Performance requirements  
+- ✅ Code quality standards
 
-Ready to merge when approved!
-```
-
-## Orchestrator Responses
-
-### Code Review
-- Use PR review feature for inline comments
-- Approve or request changes through GitHub UI
-- Provide clear feedback on what needs adjustment
-
-### Providing Guidance
-```markdown
-Good question! For this use case, I recommend approach A because:
-1. [Reason 1]
-2. [Reason 2]
-3. [Reason 3]
-
-Here's an example:
-```code
-// Example implementation
-```
-
-Let me know if you need more clarification!
+Ready for merge.
 ```
 
 ## Best Practices
