@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/mboros1-orchestrator-badge.png)](https://mseep.ai/app/mboros1-orchestrator)
+
 # Orchestrator Template
 
 A GitHub template repository that creates an AI Orchestrator - a Claude Code instance that manages multiple AI workers on your software development project.
